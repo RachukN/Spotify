@@ -7,7 +7,9 @@
     height: 50px; 
     width: 600px;
   }
-  
+  .top-navigation.light{
+    background-color: #D1D1D6;
+  }
   .nav-left {
     position:fixed ;
     width: 600px;
@@ -15,7 +17,9 @@
     gap: 10px;
     background: var(--Black, #13191C);
   }
-  
+  .nav-left.light{
+    background-color: #D1D1D6;
+  }
   .nav-button {
     display: flex;
 padding: 10px 26px;
@@ -25,7 +29,9 @@ gap: 10px;
 border-radius: 5px;
 background: var(--white-19, rgba(255, 255, 255, 0.19));
   }
-  
+  .nav-button.light{
+    background: var(--white-19, rgba(255, 255, 255, 0.855));
+  }
   .nav-button.active {
     background-color: #ffffff;
     color: #121212;

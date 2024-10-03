@@ -1,14 +1,13 @@
-body {
+body{
     font-family: 'Arial', sans-serif;
 
 
     background: var(--Black, #13191C);
 
 }
-
 .subscription-page {
-    margin-left: 600px;
-    margin-bottom: 100px;
+    padding-left: 600px;
+    margin-bottom: 50px;
     color: #fff;
 }
 
@@ -160,12 +159,17 @@ body {
     border-top: none;
 }
 
-.section-item:hover {
+.section-item.light-item:hover {
     cursor: pointer;
     border-radius: 12px;
     background: var(--white-19, rgb(184, 184, 184));
 }
-
+.section-item:hover {
+    cursor: pointer;
+    border-radius: 12px;
+    background: var(--white-19, rgba(255, 255, 255, 0.19));
+color: #FFF;
+}
 .toggle-switch {
     position: absolute;
     width: 40px;
@@ -204,7 +208,9 @@ body {
     border-radius: 50%;
     transition: transform 0.3s;
 }
-
+.dark{
+color: #fff;
+}
 .toggle-checkbox:checked+.toggle-label {
     background-color: #1db954;
 }
@@ -224,7 +230,9 @@ body {
 
 
 
-
+.section-item{
+    border-top: none;
+}
 .subscription-page.light {
     background: var(--bright-topic, #D1D1D6);
     color: var(--Light-black, #1A2125);

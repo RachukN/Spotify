@@ -6,6 +6,8 @@ import LeftGreen from '../Main/Images/Frame 73 (1).png';
 import RightGreen from '../Main/Images/Frame 72.png';
 import Play from '../../images/Frame 76.png';
 import '../../styles/Music.css';
+import { useTheme } from '../../services/ThemeContext';
+
 
 interface SpotifyItem {
   id: string;
@@ -25,6 +27,8 @@ const SpotifyContentListAlbum: React.FC<SpotifyContentListProps> = ({ items, han
   const scrollRef = useRef<HTMLDivElement>(null);
   const [leftArrow, setLeftArrow] = useState(LeftGray);
   const [rightArrow, setRightArrow] = useState(RightGreen);
+  const { isDarkMode } = useTheme();
+ 
 
   const updateArrows = () => {
     if (scrollRef.current) {
@@ -55,8 +59,8 @@ const SpotifyContentListAlbum: React.FC<SpotifyContentListProps> = ({ items, han
         <div style={{ position: 'relative', width: '100%' }}>
           <img src={leftArrow} alt="Scroll Left" className="img-l" onClick={scrollLeft} />
           <img src={rightArrow} alt="Scroll Right" className="img-r" onClick={scrollRight} />
-          <div className='main-title'>{title}</div>
-
+          <div className={`main-title ${isDarkMode ? 'dark' : 'light'}`}
+          >{title}</div>
           <div ref={scrollRef} className='music-c' onScroll={updateArrows}>
             {items.map((item) => (
               <div key={item.id} className="img-container">
@@ -71,18 +75,18 @@ const SpotifyContentListAlbum: React.FC<SpotifyContentListProps> = ({ items, han
                   </div>
                 </div>
                 <div>
-                  <p>
+                <div className="hover">
                     <Link to={`/album/${item.id}`}>
-                      <span className="auth" style={{ margin: '10px 0', cursor: 'pointer' }}>
+                      <span className={`auth ${isDarkMode ? 'dark' : 'light'}`} style={{ margin: '10px 0', cursor: 'pointer' }}>
                        
                       {item.name.length > 16 ? `${item.name.substring(0, 12)}...` : item.name}
                       </span>
                     </Link>
-                  </p>
+                  </div>
                   <p className='artist-name' style={{ fontSize: 'small' }}>
                     {item.artists.map(artist => (
                       <Link key={artist.id} to={`/artist/${artist.id}`}>
-                        <span className="result-name" style={{ cursor: 'pointer' }}>
+                        <span className={`result-name ${isDarkMode ? 'dark' : 'light'}`} style={{ cursor: 'pointer' }}>
                         {artist.name.length > 16 ? `${artist.name.substring(0, 12)}. ..` : artist.name}
                         </span>
                       </Link>

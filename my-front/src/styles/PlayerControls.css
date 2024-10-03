@@ -5,7 +5,6 @@
 
 }
 
-
 .alb {
   position: relative;
   right: -20px;
@@ -53,7 +52,6 @@ button {
   position: relative;
   right: -40px;
 
-  background-color: #0D0D0D;
 }
 
 .nam {
@@ -81,7 +79,6 @@ button {
   align-items: center;
   margin-left: 20px;
 
-  background-color: #0D0D0D;
 }
 
 .track-progress .title {
@@ -100,7 +97,6 @@ button {
   align-items: center;
   margin-left: 30px;
 
-  background-color: #0D0D0D;
 }
 
 .tools img {
@@ -364,4 +360,7 @@ button:any-link {
 .title-c {
   color: var(--Green, #ffffff);
   font-size: 18px;
+}
+.info.light{
+  background-color: #1E2E1E;
 }

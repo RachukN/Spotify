@@ -53,7 +53,7 @@ const TopArtists: React.FC = () => {
 
   return (
     <div>
-      <SpotifyContentListArtist artists={artists} title="Top Artists" />
+      <SpotifyContentListArtist artists={artists} title="Популярні артисти" />
     </div>
   );
 };

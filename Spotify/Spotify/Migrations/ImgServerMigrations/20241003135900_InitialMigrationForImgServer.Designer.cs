@@ -9,11 +9,11 @@ using Spotify.Data;
 
 #nullable disable
 
-namespace Spotify.Migrations.ImgServerDb
+namespace Spotify.Migrations.ImgServerMigrations
 {
     [DbContext(typeof(ImgServerDbContext))]
-    [Migration("20240930170539_InitialCreateForImgServer")]
-    partial class InitialCreateForImgServer
+    [Migration("20241003135900_InitialMigrationForImgServer")]
+    partial class InitialMigrationForImgServer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,10 @@ namespace Spotify.Migrations.ImgServerDb
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

@@ -9,6 +9,7 @@ import LibraryIcon from './Frame 42.png';
 import Logo from './SymphoNix logo.png';
 import LikedTracksIcon from './Rectangle 2.png';
 import Plus from './Default.png';
+import { useTheme } from '../../services/ThemeContext';
 
 interface Album {
   id: string;
@@ -34,7 +35,8 @@ const Sidebar: React.FC = () => {
   const [favoriteTracksCount, setFavoriteTracksCount] = useState<number>(0);
   const [favoriteArtists, setFavoriteArtists] = useState<Artist[]>([]);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  
+  const { isDarkMode } = useTheme();
+ 
   // Стан для відстеження активних кнопок
   const [activeFilters, setActiveFilters] = useState({
     playlists: true,
@@ -147,7 +149,7 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isDarkMode ? 'dark' : 'light'}`}>
       <header className="sidebar-header">
         <img src={Logo} alt="SymphoNix Logo" className="sidebar-logo" />
       </header>

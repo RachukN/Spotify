@@ -14,11 +14,11 @@ import Filter from '../Navigation/Filter';
 import NewTracks from '../Templates/NewTrack';
 import TopArtists from '../Templates/TopArtists';
 import LoadingPageWithSidebar from '../Loading/LoadingPage';
-
+import { useTheme } from '../../services/ThemeContext';
 const MainPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('all'); // Track the current filter ("all", "music", etc.)
   const [loading, setLoading] = useState(true);
-
+  const { isDarkMode } = useTheme();
   useEffect(() => {
     // Check if the page has been reloaded once already
     const isHomeReloaded = localStorage.getItem('isHomeReloaded');
@@ -45,9 +45,13 @@ const MainPage: React.FC = () => {
   }
 
   return (
-    <div className="main-container">
-      <div className='sidebar'><Sidebar /></div>
-      <div className="content">
+
+    <div className={`main-container ${isDarkMode ? 'dark' : 'light'}`}>
+
+      <div className='sidebar'><Sidebar  /></div>
+      
+      <div className={`content ${isDarkMode ? 'dark' : 'light'}`}>
+  
         <div className="banner-container">
           <img src={bannerImage} alt="Banner" className="banner-image" />
         </div>
@@ -63,7 +67,7 @@ const MainPage: React.FC = () => {
         {/* Only show this section when filter is "all" */}
         {filter === 'all' && (
           <div className='cont'>
-            <h2 className="section-title">Шоу, які варто переглянути</h2>
+            <h2 className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>Шоу, які варто переглянути</h2>
             <Shows />
           </div>
         )}
@@ -77,8 +81,8 @@ const MainPage: React.FC = () => {
         </div>
 
         <div className='cont'>
-          <h2 className="section-title">Топ-чарти</h2>
-          <SymphoNixAlbums />
+           <h2 className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>Toп-чарти</h2>
+            <SymphoNixAlbums />
         </div>
 
         <div className='cont'>
@@ -89,7 +93,7 @@ const MainPage: React.FC = () => {
           <PopularRadio />
         </div>
 
-        <div className='filter'><TopNavigation /></div>
+        <div className='filter'><TopNavigation   /></div>
         <div className='filter-f'>
           <Filter onFilterChange={handleFilterChange} /> {/* Pass the handler to Filter */}
         </div>

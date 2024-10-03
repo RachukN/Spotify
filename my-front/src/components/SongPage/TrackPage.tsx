@@ -14,8 +14,8 @@ import LeftGreen from '../Main/Images/Frame 73 (1).png';
 import RightGreen from '../Main/Images/Frame 72.png';
 import Setting1 from '../../images/Frame 160 (1).png';
 import '../../styles/SongPage.css';
-import LoadingPage from '../Loading/LoadingPage';
 import LoadingPageWithSidebarT from '../Loading/LoadingTrackPage';
+import { useTheme } from '../../services/ThemeContext';
 
 interface Device {
     id: string;
@@ -88,8 +88,9 @@ const TrackPage: React.FC = () => {
     const [showDropdown, setShowDropdown] = useState<{ [key: number]: boolean }>({});
     const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number } | null>(null);
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    const { isDarkMode } = useTheme();
 
-    
+
     useEffect(() => {
         const fetchTrackData = async () => {
             const token = localStorage.getItem('spotifyAccessToken');
@@ -220,12 +221,12 @@ const TrackPage: React.FC = () => {
                 setError('No access token found');
                 return;
             }
-    
+
             const url = `https://api.spotify.com/v1/recommendations?seed_tracks=${trackId}&limit=5`;
             const options = {
                 headers: { Authorization: `Bearer ${token}` },
             };
-    
+
             try {
                 const data = await fetchWithRetry(url, options);
                 setRecommendations(data.tracks);
@@ -233,7 +234,7 @@ const TrackPage: React.FC = () => {
                 console.error('Failed to fetch recommendations:', error);
             }
         };
-    
+
         fetchRecommendations();
     }, [trackId]);
 
@@ -255,7 +256,7 @@ const TrackPage: React.FC = () => {
     };
 
     if (loading) {
-        return <div><LoadingPageWithSidebarT/></div>;
+        return <div><LoadingPageWithSidebarT /></div>;
     }
 
     if (!track) {
@@ -441,12 +442,13 @@ const TrackPage: React.FC = () => {
     };
 
     return (
-        <div className="main-container-s">
+        <div className="main-container-s" >
             <div className="sidebar-s">
                 <Sidebar />
             </div>
 
-            <div className="content-s">
+            <div className={`content-s ${isDarkMode ? 'dark' : 'light'}`}
+            >
                 <TopNavigation />
 
                 {/* Track Banner */}
@@ -460,7 +462,8 @@ const TrackPage: React.FC = () => {
                     <div className="name-s">
                         <div className="title-s">Трек</div>
                         <h1>{track.name}</h1>
-                        <div className="profile-details-s">
+                        <div className={`profile-details-s ${isDarkMode ? 'dark' : 'light'}`}
+                        >
                             <p className="title-s">{track.artists.map((artist) => artist.name).join(', ')}</p><div className="marg-5">|</div>
                             <p>{track.album.name}</p><div className="marg-5">|</div>
                             <p>{track.album.release_date}</p><div className="marg-5">|</div>
@@ -490,13 +493,14 @@ const TrackPage: React.FC = () => {
 
                 <div className="cont-a">
                     <div className="top-tracks">
-                        <h2 className="popularity">Рекомендації на основі треку</h2>
+
+                        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Рекомендації на основі треку</h2>
+
                         <ul className="tracks-list">
                             {recommendations.slice(0, 5).map((rec, index) => (
 
-                                <li className="track-item"  // Play track on image click
-                                    key={`${rec.id}-${index}`}
-                                >
+                                <li key={`${track.id}-${index}`} className={` track-item ${isDarkMode ? 'dark' : 'light'}`}>
+
                                     <span className="track-index">{index + 1}</span>
                                     <img
                                         src={rec.album.images[0]?.url || "default-album.png"}
@@ -510,22 +514,23 @@ const TrackPage: React.FC = () => {
                                     <div className="track-info">
 
                                         <Link key={rec.album.id} to={`/album/${rec.album.id}`}>
-                                            <span className="name-title" style={{ margin: '10px 0', cursor: 'pointer' }}>
+                                            <span className={`name-title ${isDarkMode ? 'dark' : 'light'}`}>
                                                 {rec.name}
                                             </span>
                                         </Link>
                                         <p className="track-artists">
                                             {rec.artists.map(artist => (
                                                 <Link key={artist.id} to={`/artist/${artist.id}`}>
-                                                    <span className="result-name" style={{ cursor: 'pointer' }}>
+                                                    <span className={`result-name ${isDarkMode ? 'dark' : 'light'}`}>
                                                         {artist.name}
                                                     </span>
                                                 </Link>
                                             ))}
                                         </p>
                                     </div>
-                                    <div className="track-album">{rec.popularity || 'N/A'}</div>
-                                    <div className="track-duration">
+                                    <div className={`track-album ${isDarkMode ? 'dark' : 'light'}`}
+                                    >{track.popularity}</div>
+                                    <div className={`track-duration ${isDarkMode ? 'dark' : 'light'}`}>
                                         <img
                                             src={Setting1}
                                             alt="Settings"
@@ -581,10 +586,11 @@ const TrackPage: React.FC = () => {
                 {/* Top Tracks Section */}
                 <div className="cont-a">
                     <div className="top-tracks">
-                        <h2 className="popularity">Популярні треки {track.artists.map((artist) => artist.name).join(', ')} </h2>
+                        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Популярні треки {track.artists.map((artist) => artist.name).join(', ')}</h2>
+
                         <ul className="tracks-list">
                             {topTracks.map((track, index) => (
-                                <li className="track-item" key={`${track.id}-${index}`} >
+                                <li key={`${track.id}-${index}`} className={` track-item ${isDarkMode ? 'dark' : 'light'}`}>
                                     <span className="track-index">{index + 1}</span>
                                     <img
                                         src={track.album.images[0]?.url || "default-album.png"}
@@ -596,24 +602,67 @@ const TrackPage: React.FC = () => {
                                     <div className="track-info">
                                         <p className="track-name">
                                             <Link to={`/track/${track.id}`}>
-                                                <span className="name-title" style={{ margin: '10px 0', cursor: 'pointer' }}>
+                                                <span className={`name-title ${isDarkMode ? 'dark' : 'light'}`}>
                                                     {track.name}
                                                 </span>
                                             </Link>
                                         </p>
                                     </div>
-                                    <div className="track-album">{track.popularity}</div>
-                                    <div className="track-duration">{formatDuration(track.duration_ms)}</div>
-                                    <div onClick={() => handlePlayAlbum(track.uri)} className="play-icona">
-                                        <img src={Play} alt="Play" />
-                                    </div>
+                                    <div className={`track-album ${isDarkMode ? 'dark' : 'light'}`}
+                                    >{track.popularity}</div>
+                                    <div className={`track-duration ${isDarkMode ? 'dark' : 'light'}`}>
+                                        <img
+                                            src={Setting1}
+                                            alt="Settings"
+                                            className="seting-imgg"
+                                            onClick={(event) => handleDropdownToggle(event, index)}
+                                        />
+                                        {track.duration_ms ? formatDuration(track.duration_ms) : 'Unknown'}</div>
+                                    {showDropdown[index] && dropdownPosition && (
+                                        <div
+                                            className="dropdown-menu"
+                                            style={{
+                                                position: 'absolute',
+                                                top: `${dropdownPosition.top}px`,
+                                                right: `${dropdownPosition.left}px`,
+                                                backgroundColor: '#333',
+                                                padding: '10px',
+                                                borderRadius: '5px',
+                                                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                                            }}
+                                        >
+                                            <ul>
+                                                {/* Add to Favorites (already implemented) */}
+                                                <li onClick={() => handleSaveOrRemoveTrack()}>
+                                                    {isTrackSaved ? 'Видалити з улюблених' : 'Додати до улюблених'}
+                                                </li>
+
+                                                {/* Add to Playlist (show playlists on click) */}
+                                                <li onClick={togglePlaylists}>
+                                                    Додати до плейлиста
+                                                    {showPlaylists && (
+                                                        <ul className="playlist-options">
+                                                            {playlists.map((playlist) => (
+                                                                <li key={playlist.id} onClick={() => handleAddToPlaylist(playlist.id)}>
+                                                                    {playlist.name}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    )}
+                                                </li>
+
+                                                {/* Go to Album */}
+                                                <li onClick={handleGoToAlbum}>Перейти до альбому</li>
+                                            </ul>
+                                        </div>
+                                    )}
                                 </li>
                             ))}
                         </ul>
                     </div>
                 </div>
                 {/* Singles Section with Scroll */}
-                <h2 className="popularity">Сингли</h2>
+                <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Сингли</h2>
                 <div className="cont-sa">
                     <div style={{ position: "relative", width: "100%" }}>
                         <img
@@ -645,8 +694,8 @@ const TrackPage: React.FC = () => {
                                             <img src={Play} alt="Play" />
                                         </div>
                                         <Link key={single.id} to={`/album/${single.id}`}>
-                                            <span className='auth' style={{ margin: '10px 0', cursor: 'pointer' }}>
-                                                {single.name.length > 16 ? `${single.name.substring(0, 12)}...` : single.name}
+                                        <span className={`name-title ${isDarkMode ? 'dark' : 'light'}`}>
+                                        {single.name.length > 16 ? `${single.name.substring(0, 12)}...` : single.name}
 
                                             </span>
                                         </Link>
@@ -657,8 +706,8 @@ const TrackPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-
-                <h2 className="popularity">Схожі артисти</h2>
+                <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Схожі артисти</h2>
+                
                 <div className="cont-sa">
                     <div style={{ position: "relative", width: "100%" }}>
                         <img
@@ -691,8 +740,8 @@ const TrackPage: React.FC = () => {
                                         <div className="play-iconaa" />
                                     </Link>
                                     <Link to={`/artist/${artist.id}`}>
-                                        <span className="auth" style={{ margin: '10px 0', cursor: 'pointer' }}>
-                                            {artist.name.length > 16 ? `${artist.name.substring(0, 12)}...` : artist.name}
+                                    <span className={`name-title ${isDarkMode ? 'dark' : 'light'}`}>
+                                    {artist.name.length > 16 ? `${artist.name.substring(0, 12)}...` : artist.name}
                                         </span>
                                     </Link>
                                 </div>

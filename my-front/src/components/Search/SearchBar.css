@@ -28,6 +28,10 @@
   color: #00FF03; 
 
 }
+.search-input{
+  background-color: #D1D1D6;
+  border: 2.5px solid #0B9F0D;
+}
 .search-input::placeholder {
   color: #00FF03; /* Сірий колір для тексту підказки */
 }

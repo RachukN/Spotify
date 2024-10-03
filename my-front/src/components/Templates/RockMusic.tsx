@@ -51,7 +51,7 @@ const RockMusic: React.FC = () => {
   }
 
   return (
-    <SpotifyContentListTrack items={tracks} handlePlay={handlePlay} title="Rock Tracks" />
+    <SpotifyContentListTrack items={tracks} handlePlay={handlePlay} title="Рок треки" />
   );
 };
 

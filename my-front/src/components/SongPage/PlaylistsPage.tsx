@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../styles/Playlists.css';
@@ -6,8 +6,8 @@ import BGimage from '../../images/Vector 1.png';
 import TopNavigation from '../Navigation/TopNavigation';
 import SearchBar from '../Search/SearchBar';
 import Default from '../Sidebar/Frame 560.png';
-import Check from '../../images/Property 1=Variant2.png'
-import Uncheck from '../../images/Property 1=Default (1).png'
+import { useTheme } from '../../services/ThemeContext';
+
 interface Playlist {
     id: string;
     name: string;
@@ -25,9 +25,9 @@ const PlaylistsPage: React.FC = () => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [uploadedImage, setUploadedImage] = useState<File | null>(null);
     const [showModal, setShowModal] = useState(false); // State to control modal visibility
-
-    const playlistScrollRef = useRef<HTMLDivElement>(null);
-
+    const { isDarkMode } = useTheme();
+ 
+    
     useEffect(() => {
         const fetchPlaylists = async () => {
             const token = localStorage.getItem('spotifyAccessToken');
@@ -154,7 +154,7 @@ const PlaylistsPage: React.FC = () => {
     return (
         <div>
             <div className='search-p'><SearchBar /></div>
-            <div className='search-i'><TopNavigation /></div>
+            <div className='search-i'><TopNavigation isDarkMode={isDarkMode} /></div>
 
             <div className="search-results-container-p">
                 <div className="bg-img-p"><img src={BGimage} alt="background" /></div>

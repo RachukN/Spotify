@@ -12,7 +12,9 @@
   flex-direction: column;
   align-items: flex-start;
 }
-
+.sidebar.light{
+  background-color: #1E2E1E;
+}
 .sidebar-header {
   display: flex;
   align-items: center;

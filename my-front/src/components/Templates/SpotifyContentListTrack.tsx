@@ -6,6 +6,7 @@ import LeftGreen from '../Main/Images/Frame 73 (1).png';
 import RightGreen from '../Main/Images/Frame 72.png';
 import Play from '../../images/Frame 76.png';
 import '../../styles/Music.css';
+import { useTheme } from '../../services/ThemeContext';
 
 interface Track {
   id: string;
@@ -25,6 +26,7 @@ const SpotifyContentListTrack: React.FC<SpotifyContentListProps> = ({ items, han
   const scrollRef = useRef<HTMLDivElement>(null);
   const [leftArrow, setLeftArrow] = useState(LeftGray);
   const [rightArrow, setRightArrow] = useState(RightGreen);
+  const { isDarkMode } = useTheme();
 
   const updateArrows = () => {
     if (scrollRef.current) {
@@ -55,7 +57,8 @@ const SpotifyContentListTrack: React.FC<SpotifyContentListProps> = ({ items, han
         <div style={{ position: 'relative', width: '100%' }}>
           <img src={leftArrow} alt="Scroll Left" className="img-l" onClick={scrollLeft} />
           <img src={rightArrow} alt="Scroll Right" className="img-r" onClick={scrollRight} />
-          <div className='main-title'>{title}</div>
+          <div className={`main-title ${isDarkMode ? 'dark' : 'light'}`}
+          >{title}</div>
 
           <div ref={scrollRef} className='music-c' onScroll={updateArrows}>
             {items.map((track, index) => (
@@ -71,18 +74,18 @@ const SpotifyContentListTrack: React.FC<SpotifyContentListProps> = ({ items, han
                   </div>
                 </div>
                 <div>
-                  <p>
+                  <div className="hover">
                     <Link to={`/track/${track.id}`}>
-                      <span className="auth" style={{ margin: '10px 0', cursor: 'pointer' }}>
+                      <span className={`auth ${isDarkMode ? 'dark' : 'light'}`} style={{ margin: '10px 0', cursor: 'pointer' }}>
                         {track.name.length > 16 ? `${track.name.substring(0, 12)}...` : track.name}
                       </span>
                     </Link>
-                  </p>
+                  </div>
                   <p className='artist-name' style={{ fontSize: 'small' }}>
                     {track.artists.map(artist => (
                       <Link key={artist.id} to={`/artist/${artist.id}`}>
-                        <span className="result-name" style={{ cursor: 'pointer' }}>
-                          {artist.name}
+                        <span className={`result-name ${isDarkMode ? 'dark' : 'light'}`} style={{ cursor: 'pointer' }}>
+                          {artist.name.length > 16 ? `${artist.name.substring(0, 12)}.  ` : artist.name}
                         </span>
                       </Link>
                     ))}

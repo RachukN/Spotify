@@ -1,28 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import './SubscriptionPage.css'; 
+import React, {  useEffect } from 'react';
+import './SubscriptionPage.css';
 import Frame217 from './Images/Frame 217.png';
 import Frame218 from './Images/Frame 218.png';
 import Frame219 from './Images/Frame 219.png';
-import PlusIcon from './Images/Frame 210.png'; 
-import Frame216 from './Images/Frame 72.png'; 
+import PlusIcon from './Images/Frame 210.png';
+import Frame216 from './Images/Frame 72.png';
 import Sidebar from '../Sidebar/Sidebar';
-import Logo from './Images/Group.png'; 
-import Edit from './Images/edit.png'; 
-import History from './Images/Frame 211.png'; 
-import Saved from './Images/Frame 212.png'; 
-import Salled from './Images/Frame 213.png'; 
-import Change from './Images/Frame 214.png'; 
-import Bods from './Images/Frame 215.png'; 
-import Bell from './Images/Frame 216.png'; 
-import Pyt from './Images/Frame 220.png'; 
-import Night from './Images/Frame 288.png'; 
-import Logo2 from './Images/Group (2).png'; 
+import Logo from './Images/Group.png';
+import Edit from './Images/edit.png';
+import History from './Images/Frame 211.png';
+import Saved from './Images/Frame 212.png';
+import Salled from './Images/Frame 213.png';
+import Change from './Images/Frame 214.png';
+import Bods from './Images/Frame 215.png';
+import Bell from './Images/Frame 216.png';
+import Pyt from './Images/Frame 220.png';
+import Night from './Images/Frame 288.png';
+import Logo2 from './Images/Group (2).png';
 import TopNavigation from '../Navigation/TopNavigation';
 import { Link } from 'react-router-dom';
 import Footer from '../Footer/Footer';
-
+import { useTheme } from '../../services/ThemeContext';
 const SubscriptionPage: React.FC = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    
+    const { isDarkMode, toggleTheme } = useTheme();
 
     useEffect(() => {
         if (isDarkMode) {
@@ -32,14 +33,12 @@ const SubscriptionPage: React.FC = () => {
         }
     }, [isDarkMode]);
 
-    const handleThemeToggle = () => {
-        setIsDarkMode(!isDarkMode);
-    };
+    
 
     return (
         <div className={`subscription-page ${isDarkMode ? 'dark' : 'light'}`}>
-            <Sidebar />
-            <TopNavigation />
+            <Sidebar/>
+            <TopNavigation/>
 
             <div className={`subscription-header ${isDarkMode ? 'dark-header' : 'light-header'}`}>
                 <h3 className={`plan ${isDarkMode ? 'dark' : 'light'}`}>Ваш план</h3>
@@ -58,13 +57,13 @@ const SubscriptionPage: React.FC = () => {
                 </Link>
                 <Link to={`/editprofile`} className={`dark ${isDarkMode ? 'dark' : 'light'}`}>
                     <div className={`section-item ${isDarkMode ? 'dark-item' : 'light-item'}`}>
-                    <span className={`frame ${isDarkMode ? 'dark' : 'light'}`}><img src={Edit} alt="Edit Profile" /></span>
+                        <span className={`frame ${isDarkMode ? 'dark' : 'light'}`}><img src={Edit} alt="Edit Profile" /></span>
                         <span className='left'>Редагувати профіль</span>
                         <span className='right'><img src={Frame216} alt="Right Arrow" /></span>
                     </div>
                 </Link>
                 <div className={`section-item ${isDarkMode ? 'dark-item' : 'light-item'}`}>
-                <span className={`frame ${isDarkMode ? 'dark' : 'light'}`}><img src={PlusIcon} alt="Restore Playlists" /></span>
+                    <span className={`frame ${isDarkMode ? 'dark' : 'light'}`}><img src={PlusIcon} alt="Restore Playlists" /></span>
                     <span className='left'>Відновлення списків відтворення</span>
                     <span className='right'><img src={Frame216} alt="Right Arrow" /></span>
                 </div>
@@ -139,13 +138,13 @@ const SubscriptionPage: React.FC = () => {
                             id="dark-mode"
                             className="toggle-checkbox"
                             checked={isDarkMode}
-                            onChange={handleThemeToggle}
+                            onChange={toggleTheme} // Use global toggleTheme function
                         />
                         <label htmlFor="dark-mode" className="toggle-label"></label>
                     </div>
                 </div>
             </div>
-            <div className="footers"><Footer /></div>
+            <div className="footers"><Footer  /></div>
         </div>
     );
 };

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SearchBar.css';
 import SearchIcon from '../../images/Frame 57.png';
-import HomeIcon from '../Player/Images/Vector (26).png';
-import { Link } from 'react-router-dom';
+import { useTheme } from '../../services/ThemeContext';
 
 interface SearchBarProps {
   query?: string; // Робимо властивість query необов'язковою
@@ -12,7 +11,8 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ query: initialQuery = '' }) => {
   const [query, setQuery] = useState(initialQuery);
   const navigate = useNavigate();
-
+  const { isDarkMode } = useTheme();
+ 
   useEffect(() => {
     setQuery(initialQuery); // Оновлюємо значення при отриманні нового запиту
   }, [initialQuery]);
@@ -30,11 +30,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ query: initialQuery = '' }) => {
   };
 
   return (
-    <div className="top-navigation">
-      <div className="nav-left">
+    <div  className={`top-navigation ${isDarkMode ? 'dark' : 'light'}`}
+>
+      <div  className={`nav-left ${isDarkMode ? 'dark' : 'light'}`}
+      >
         <input
           type="text"
-          className="search-input"
+          className={`search-input ${isDarkMode ? 'dark' : 'light'}`}
+
           placeholder="Пошук"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
