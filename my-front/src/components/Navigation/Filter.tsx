@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './Filter.css';
-
+import { useTheme } from '../../services/ThemeContext';
 interface FilterProps {
   onFilterChange: (filter: string) => void;
 }
 
 const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all'); // Track active button
-
+  const { isDarkMode } = useTheme();
   // Handle button click
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter); // Set the clicked button as active
@@ -15,10 +15,13 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   };
 
   return (
-    <div className="top-navigation">
-      <div className="nav-left">
+   
+      <div className={`top-navigation ${isDarkMode ? 'dark' : 'light'}`}>
+    
+      <div className={`nav-left ${isDarkMode ? 'dark' : 'light'}`}>
+    
         <button
-          className={`nav-button ${activeFilter === 'all' ? 'active' : ''}`} // Apply 'active' class if 'all' is selected
+          className={`nav-button  ${activeFilter === 'all' ? 'active' : ''}`} // Apply 'active' class if 'all' is selected
           onClick={() => handleFilterClick('all')}
         >
           Усе

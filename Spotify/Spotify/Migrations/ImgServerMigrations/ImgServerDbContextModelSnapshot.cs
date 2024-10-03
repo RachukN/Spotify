@@ -8,7 +8,7 @@ using Spotify.Data;
 
 #nullable disable
 
-namespace Spotify.Migrations.ImgServerDb
+namespace Spotify.Migrations.ImgServerMigrations
 {
     [DbContext(typeof(ImgServerDbContext))]
     partial class ImgServerDbContextModelSnapshot : ModelSnapshot

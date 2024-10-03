@@ -8,6 +8,7 @@ import bannerImage from '../Home/Images/Frame 148.png';
 import Favorite from '../Sidebar/Чарти-01.png';
 import TopNavigation from '../Navigation/TopNavigation';
 import Footer from '../Footer/Footer';
+import { useTheme } from '../../services/ThemeContext';
 
 interface Track {
     id: string;
@@ -25,6 +26,7 @@ interface Track {
 const FavoritesPage: React.FC = () => {
     const [favoriteTracks, setFavoriteTracks] = useState<Track[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const { isDarkMode } = useTheme();
 
     useEffect(() => {
         const fetchFavoriteTracks = async () => {
@@ -99,10 +101,11 @@ const FavoritesPage: React.FC = () => {
 
     return (
         <div className="main-container-s">
-            <div className='sidebar'><Sidebar /></div>
+            <div className='sidebar'><Sidebar isDarkMode={isDarkMode} /></div>
 
-            <div className="content-s">
-                <TopNavigation />
+            <div className={`content-s ${isDarkMode ? 'dark' : 'light'}`}
+            >
+                <TopNavigation isDarkMode={isDarkMode} />
                 <div className="banner-container-user-s">
                     <img src={bannerImage} alt="Banner" className="banner-image-user" />
                 </div>
@@ -142,20 +145,23 @@ const FavoritesPage: React.FC = () => {
                                 <div className="track-info">
                                     <p className="track-name">
                                         <Link to={`/track/${track.id}`}>
-                                            <span className="name-title" style={{ margin: '10px 0', cursor: 'pointer' }}>
+                                            <span className={`name-title ${isDarkMode ? 'dark' : 'light'}`}
+                                                style={{ margin: '10px 0', cursor: 'pointer' }}>
                                                 {track.name}
                                             </span>
                                         </Link>
                                     </p>
                                 </div>
-                                <div className="track-album">{track.artists.map((artist) => artist.name).join(', ')}</div>
-                                <div className="track-duration">{formatDuration(track.duration_ms)}</div>
+                                <div  className={`track-album ${isDarkMode ? 'dark' : 'light'}`}
+                                >{track.artists.map((artist) => artist.name).join(', ')}</div>
+                                <div  className={`track-duration ${isDarkMode ? 'dark' : 'light'}`}
+                                >{formatDuration(track.duration_ms)}</div>
                             </li>
                         ))}
                     </ul>
                 </div>
 
-                <Footer />
+                <Footer isDarkMode={isDarkMode} />
             </div>
         </div>
     );

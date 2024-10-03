@@ -5,6 +5,10 @@
     color: white;
     border-radius: 8px;
 }
+.edit-profile.light{
+    background-color: #D1D1D6;
+    color: var(--Light-black, #1A2125);
+}
 
 .edit-profile h2 {
     text-align: left;
@@ -15,7 +19,10 @@
     color: #fff;
 
 }
+.edit-profile.light h2{
+    color: var(--Light-black, #1A2125);
 
+}
 .edit-profile-form {
     margin-top: 40px;
     display: flex;
@@ -54,7 +61,6 @@
     padding: 10px;
     background: var(--Black, #13191C);
     border: none;
-    color: white;
     border-radius: 32px;
     border: 1px solid var(--White, #FFF);
     color: #FFF;
@@ -67,7 +73,12 @@
     margin-right: 10px;
     margin-bottom: 25px;
 }
-
+.edit-profile-form.light input,
+.edit-profile-form select.light{
+    color: var(--Light-black, #1A2125);
+    background-color: #D1D1D6;
+    border: 2px solid var(--Light-black, #1A2125);
+}
 .chol {
     width: 127.5px;
 }
@@ -81,12 +92,7 @@
     flex: 1;
 }
 
-.password-field .toggle-password {
-    background: none;
-    border: none;
-    color: white;
-    margin-left: 8px;
-}
+
 
 .buttons {
     display: flex;
@@ -114,7 +120,10 @@
     font-size: 22px;
     margin-right: -50px;
 }
+.cancel-button.light{
+    color: var(--Light-black, #1A2125);
 
+}
 .save-button {
     border-radius: 20px;
     background: var(--green-less-saturated, #4BDD4C);
@@ -135,6 +144,12 @@ select option {
     
 }
 
+.ch.light option,
+ .chol.light option{
+    background-color: #D1D1D6;
+    color: var(--Light-black, #1A2125);
+
+}
 
 select.chol option:checked {
     background: var(--white-19, rgba(255, 255, 255, 0.19));
@@ -146,4 +161,7 @@ select.chol option:checked {
 
 .select-wrapper select {
     width: 100%;
+}
+.footer.light{
+    background-color: #D1D1D6;
 }

@@ -4,6 +4,9 @@
   .main-container {
     display: flex;
   }
+  .content.light {
+    background-color: #D1D1D6;
+  }
   .sidebar{
     position: fixed;
     left: 0;
@@ -65,4 +68,18 @@ margin-left: 30px;
     object-fit: cover; /* Це забезпечить правильне масштабування зображення */
     margin-bottom: 50px;
   }
-
+  .section-title.dark{
+   
+    color: #00FF03;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .section-title.light{
+    color: #0B9F0D;
+font-size: 35px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+  }

@@ -44,10 +44,7 @@ h2{
   margin-bottom: -10px;
   font-size: 30px;
 }
-.h22{
-  margin-top: -60px;
-  margin-left: 0px;
-}
+
 .hh-2{
   margin-top: -150px;
   font-size: 30px;
@@ -56,8 +53,24 @@ h2{
 margin-left: 30px;
 }
 .cont{
-  margin-top: 0px;
+  margin-top: 10px;
   margin-left: 30px;
+  
+}
+.conter{
+  margin-left: 30px;
+  padding-top: 40px;
+}
+.section-title.light{
+  font-size: 35px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+color: #0B9F0D;
+}
+.contik{
+  margin-left: 30px;
+  margin-top: -60px;
   
 }
 .section-titleh{
@@ -69,6 +82,10 @@ font-style: normal;
 font-weight: 400;
 line-height: normal;
 margin-left: 25px;
+}
+.section-titleh.light{
+  color: var(--Light-black, #1A2125);
+
 }
 .banner-image-user {
   margin-left: -90px;

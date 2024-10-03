@@ -6,7 +6,9 @@
     background: var(--Black, #13191C);
     height: 50px; 
   }
-  
+  .top-navigation.light{
+    background: var(--bright-topic, #D1D1D6);
+  }
   .nav-left {
     display: flex;
     gap: 10px;

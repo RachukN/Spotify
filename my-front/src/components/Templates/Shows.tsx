@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import '../../styles/Music.css';
 import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum';
+import { useTheme } from '../../services/ThemeContext';
 
 interface Show {
   id: string;
@@ -17,7 +18,8 @@ const Shows: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const { isDarkMode } = useTheme();
+ 
   useEffect(() => {
     const fetchShows = async () => {
       const token = localStorage.getItem('spotifyAccessToken');
@@ -119,8 +121,10 @@ const Shows: React.FC = () => {
                         style={{ width: '140px', height: '140px', borderRadius: '8px' }}
                       />
                     )}
-                    <p className='auth' style={{ margin: '10px 0' }}>{show.name}</p>
-                    <p style={{ fontSize: 'small', color: '#666' }}>{show.publisher}</p> {/* Show's publisher */}
+                    <p  className={`auth ${isDarkMode ? 'dark' : 'light'}`}
+ style={{ margin: '10px 0' }}>{show.name}</p>
+                    <p  className={` result-name ${isDarkMode ? 'dark' : 'light'}`}
+ >{show.publisher}</p> {/* Show's publisher */}
                   </a>
                 </div>
               );

@@ -23,9 +23,12 @@ import EditProfile from './components/UserProfil/EditProfile';
 import PremiumRequired from './components/UserProfil/PremiumRequired';
 import LoadingTrackPage from './components/Loading/LoadingTrackPage';
 import UploadImages from './services/UploadImages';
-const App: React.FC = () => {
-  return (
+import { ThemeProvider } from './services/ThemeContext';
 
+const App: React.FC = () => {
+  
+  return (
+    <ThemeProvider>
     <GlobalPlayerProvider>
       
     <Router>
@@ -57,9 +60,9 @@ const App: React.FC = () => {
         </Route>
       </Routes>
     </Router>
-    
+   
     </GlobalPlayerProvider>
-    
+    </ThemeProvider>
   );
 };
 

@@ -8,7 +8,13 @@
   margin-top: 20px;
   
 }
-
+.auth.light{
+  font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+ color: #0B9F0D;
+}
 .img-container {
   width: 153px;
   text-align: center;
@@ -21,6 +27,7 @@
   margin-left: -4px;
   
 }
+
 .m-5{
   margin-right: 12px;
   width: 140px;
@@ -29,9 +36,6 @@
 }
 .play-icon {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 140px;
   height: 140px;
   background: rgba(0, 0, 0, 0.5);
@@ -39,10 +43,19 @@
   display: none; /* Hidden by default */
   justify-content: center;
   align-items: center;
-  margin-top: -49px;
-  margin-left: -5px;
+  top: 0px;
 }
+.m-5-artist{
+  margin-right: 12px;
+  width: 140px;
+  height: 140px;
+  border-radius: 8px;
+}
+.m-5-artist:hover{
+  position: relative; /* Show on hover */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Green shadow on hover */
 
+}
 .play-icon img {
   width: 40px;
   height: 40px;
@@ -81,43 +94,83 @@
   transform: scale(1.1);
 }
 
-.auth {
-  color: #00FF03;
-  font-size: 18px;
+.auth.dark {
+  color: var(--Green, #00FF03);
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
 }
-.name-title{
+.name-title.dark{
   
   font-size: 18px;
   font-weight: 600;
-  color: #FFF;
+  color: #fff;
 }
-.result-name{
-  font-size: 14px;
-  color: var(--gray-white, #CECECE);
+.name-title.light{
+  
+  font-size: 18px;
+  font-weight: 600;
+ 
 }
+.track-info{
+  color: #0B9F0D;
+}
+
+
+
 .auth:hover {
-  color: #00FF03;
+  
+  transform: scale(1.1);
+}
+.hover:hover{
   transform: scale(1.1);
 }
 .artist-name:hover{
   transform: scale(1.1);
 }
 
-.main-title{
+.main-title.dark{
   position: absolute;
   left: 3px;
   top: -60px;
   margin-right: 65px;
   display: block;
   font-size: 35px;
-  font-weight: bold;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
   color: #00FF03;
 }
+.main-title.light{
+    position: absolute;
+    left: 3px;
+    top: -60px;
+    margin-right: 65px;
+    display: block;
+    font-size: 35px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #0B9F0D;
+  }
 .result-name{
   color: var(--gray-white, #CECECE);
 
   /* txt16 (regular) */
-  margin-top: -3px;
+
+  font-weight: 400;
+  font-size: 17px;
+  line-height: normal;
+}
+.result-name.light{
+  color: var(--Light-black, #1A2125);
   font-weight: 400;
   line-height: normal;
+  
+}
+
+.top-tracks{
+  margin-top: -40px;
+  
 }

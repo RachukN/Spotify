@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import './TopNavigation.css';
 import Bell from '../Main/Images/Bell.png';
 import User from '../Main/Images/user-128.png'; // Your user image
+import { useTheme } from '../../services/ThemeContext';
+
+// Add the isDarkMode prop and the function to toggle the theme
+
 
 const TopNavigation: React.FC = () => {
   const navigate = useNavigate();
   const [dropdownActive, setDropdownActive] = useState(false);
-
-  const handleUserClick = () => {
-    setDropdownActive(!dropdownActive); // Toggle the dropdown on click
-  };
+  const { isDarkMode } = useTheme();
+ 
 
   const handleAccountClick = () => {
     navigate('/profileseting'); // Redirect to the account page
@@ -21,17 +23,19 @@ const TopNavigation: React.FC = () => {
   };
 
   const handleLogoutClick = () => {
-    // Add your logout logic here, and possibly redirect
     console.log('Logging out...');
     navigate('/');
   };
 
   return (
-    <div className="top-navigation">
+    <div className={`top-navigation ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="nav-left">
         {/* Add other left-side navigation items here */}
       </div>
       <div className="nav-right">
+        {/* Theme Toggle Button */}
+       
+
         <img src={Bell} alt="Bell" className="icon" />
         <div
           className="profile-container"

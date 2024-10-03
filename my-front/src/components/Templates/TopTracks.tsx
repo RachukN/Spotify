@@ -1,145 +1,229 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useGlobalPlayer } from '../Player/GlobalPlayer'; // Import the global player context
-import '../../styles/Music.css'; // Ensure this file exists with the styles
-import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum';
+import Setting1 from '../../images/Frame 160 (1).png'; // Settings icon
+import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum'; // Import the loading component
+import '../../styles/Music.css'; // Ensure your styles are loaded
+import { handlePlayTrack, formatDuration } from '../../utils/SpotifyPlayer';
+import { useTheme } from '../../services/ThemeContext';
+
 
 interface Track {
-  id: string;
-  name: string;
-  album: {
+    id: string;
     name: string;
-    images: { url: string }[];
-  };
-  artists: { name: string }[];
-  duration_ms: number;
-  uri: string; // Use URI for full track playback
+    album: {
+        name: string;
+        images: { url: string }[];
+        id: string;
+    };
+    artists: { name: string; id: string }[];
+    duration_ms: number;
+    popularity: number;
+    uri: string;
+}
+
+interface Playlist {
+    id: string;
+    name: string;
 }
 
 const TopTracks: React.FC = () => {
-  const [tracks, setTracks] = useState<Track[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const { player, deviceId } = useGlobalPlayer(); // Get player and device ID from global player context
+    const [recommendations, setRecommendations] = useState<Track[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [isTrackSaved, setIsTrackSaved] = useState(false);
+    const [playlists, setPlaylists] = useState<Playlist[]>([]);
+    const [showPlaylists, setShowPlaylists] = useState(false);
+    const [showDropdown, setShowDropdown] = useState<{ [key: number]: boolean }>({});
+    const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number } | null>(null);
+    const { isDarkMode } = useTheme();
+    useEffect(() => {
+        const fetchRecommendedTracks = async () => {
+            const token = localStorage.getItem('spotifyAccessToken');
+            if (!token) {
+                setError('No access token found');
+                return;
+            }
 
-  useEffect(() => {
-    const fetchRecommendedTracks = async () => {
-      const token = localStorage.getItem('spotifyAccessToken');
-      if (!token) {
-        setError('No access token found');
-        return;
-      }
+            try {
+                setLoading(true);
+                // Fetch recommendations from Spotify API
+                const response = await axios.get('https://api.spotify.com/v1/recommendations', {
+                    headers: { Authorization: `Bearer ${token}` },
+                    params: {
+                        limit: 10,
+                        seed_tracks: '0c6xIDDpzE81m2q797ordA', // Example seed track
+                    },
+                });
 
-      try {
-        setLoading(true);
-        // Define seed values for recommendations
-        const seedArtists = '4NHQUGzhtTLFvgF5SZesLK'; // Replace with your seed artist ID(s)
-        const seedGenres = 'pop,rock'; // Replace with your seed genres
-        const seedTracks = '0c6xIDDpzE81m2q797ordA'; // Replace with your seed track ID(s)
+                setRecommendations(response.data.tracks);
+                
+                // Fetch user's playlists
+                const playlistsResponse = await axios.get('https://api.spotify.com/v1/me/playlists', {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setPlaylists(playlistsResponse.data.items);
+            } catch (error: any) {
+                console.error('Error fetching recommended tracks:', error);
+                setError('An error occurred while fetching recommended tracks.');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        const response = await axios.get('https://api.spotify.com/v1/recommendations', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            limit: 10,
-            market: 'US',
-            seed_artists: seedArtists,
-            seed_genres: seedGenres,
-            seed_tracks: seedTracks,
-          },
+        fetchRecommendedTracks();
+    }, []);
+
+    // Handle playing track via Spotify Web API
+ 
+
+    const handleDropdownToggle = (event: React.MouseEvent, index: number) => {
+        const rect = (event.target as HTMLElement).getBoundingClientRect();
+        setDropdownPosition({
+            top: rect.top + window.scrollY + 65,
+            left: rect.right + window.scrollX - 1200, // Offset for positioning
         });
-
-        if (response.status === 200) {
-          setTracks(response.data.tracks);
-        } else {
-          setError('Unexpected response format from Spotify API.');
-        }
-      } catch (error: any) {
-        console.error('Error fetching recommended tracks:', error?.response || error.message || error);
-        setError('An error occurred while fetching recommended tracks.');
-      } finally {
-        setLoading(false);
-      }
+        setShowDropdown((prev) => ({
+            ...prev,
+            [index]: !prev[index], // Toggle only the clicked dropdown
+        }));
     };
 
-    fetchRecommendedTracks();
-  }, []);
+    const handleSaveOrRemoveTrack = async () => {
+        const token = localStorage.getItem('spotifyAccessToken');
+        if (!token) return;
 
-  if (loading) {
-    return <div><LoadingTrackAlbum/></div>;
-  }
+        try {
+            if (isTrackSaved) {
+                // Remove the track from the user's library
+                await axios.delete(`https://api.spotify.com/v1/me/tracks`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                    data: { ids: recommendations.map(track => track.id) },
+                });
+            } else {
+                // Save the track to the user's library
+                await axios.put(
+                    `https://api.spotify.com/v1/me/tracks`,
+                    { ids: recommendations.map(track => track.id) },
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+            }
 
-  if (error) {
-    return <div style={{ color: 'red' }}>{error}</div>;
-  }
-
-  if (tracks.length === 0) {
-    return <div>No recommended tracks available.</div>;
-  }
-
-  // Helper function to format duration from milliseconds to MM:SS
-  const formatDuration = (ms: number) => {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
-  // Handle track click to play the full track using the Web Playback SDK
-  const handleTrackClick = async (trackUri: string) => {
-    if (!player || !deviceId) {
-      alert('Spotify player is not ready.');
-      return;
-    }
-
-    try {
-      // Transfer playback to the Web Playback SDK device and start playing the track
-      await axios.put(
-        'https://api.spotify.com/v1/me/player/play',
-        {
-          uris: [trackUri],
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('spotifyAccessToken')}`,
-          },
-          params: {
-            device_id: deviceId,
-          },
+            setIsTrackSaved(!isTrackSaved); // Toggle the saved state
+        } catch (error) {
+            console.error('Failed to save or remove track.', error);
         }
-      );
-    } catch (error) {
-      console.error('Error playing track:', error);
-      alert('Failed to play the track.');
-    }
-  };
+    };
 
-  return (
-    <div className="top-tracks">
-      <ul className="tracks-list">
-        {tracks.map((track, index) => (
-          <li
-            key={track.id}
-            className="track-item"
-            onClick={() => handleTrackClick(track.uri)} // Play track on click using URI
-          >
-            <span className="track-index">{index + 1}</span>
-            <img
-              src={track.album.images[0]?.url || 'default-album.png'}
-              alt={track.name}
-              className="track-image"
-            />
-            <div className="track-info">
-              <p className="track-name">{track.name}</p>
-              <p className="track-artist">{track.artists.map((artist) => artist.name).join(', ')}</p>
+    const handleAddToPlaylist = async (playlistId: string, trackUri: string) => {
+        const token = localStorage.getItem('spotifyAccessToken');
+        if (!token) return;
+
+        try {
+            await axios.post(
+                `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+                { uris: [trackUri] },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+            alert('Track added to playlist!');
+        } catch (error) {
+            console.error('Failed to add track to playlist.', error);
+            alert('Error adding track to playlist.');
+        }
+    };
+
+    if (loading) {
+        return <div><LoadingTrackAlbum /></div>;
+    }
+
+    if (error) {
+        return <div style={{ color: 'red' }}>{error}</div>;
+    }
+
+    return (
+       
+            <div className="top-tracks">
+                <ul className="tracks-list">
+                    {recommendations.slice(0, 10).map((rec, index) => (
+                        <li key={`${rec.id}-${index}`} className={` track-item ${isDarkMode ? 'dark' : 'light'}`}>
+                                    <span className="track-index">{index + 1}</span>
+                            <img
+                                src={rec.album.images[0]?.url || "default-album.png"}
+                                alt={rec.name}
+                                className="track-image"
+                                key={rec.id}
+                                onClick={() => handlePlayTrack(rec.uri)}
+                                style={{ margin: '10px 0', cursor: 'pointer' }}
+                            />
+                            <div className="track-info">
+                                <Link key={rec.album.id} to={`/album/${rec.album.id}`}>
+                                    <span className={`name-title ${isDarkMode ? 'dark' : 'light'}`}>
+                                        {rec.name}
+                                    </span>
+                                </Link>
+                                <p className="track-artists">
+                                    {rec.artists.map(artist => (
+                                        <Link key={artist.id} to={`/artist/${artist.id}`}>
+                                             <span className={`result-name ${isDarkMode ? 'dark' : 'light'}`}>
+                                                {artist.name}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </p>
+                            </div>
+                            <div className={`track-album ${isDarkMode ? 'dark' : 'light'}`}
+                                    >{rec.popularity}</div>
+                           <div className={`track-duration ${isDarkMode ? 'dark' : 'light'}`}>
+                                <img
+                                    src={Setting1}
+                                    alt="Settings"
+                                    className="seting-imgg"
+                                    onClick={(event) => handleDropdownToggle(event, index)}
+                                />
+                                {rec.duration_ms ? formatDuration(rec.duration_ms) : 'Unknown'}
+                            </div>
+                            {showDropdown[index] && dropdownPosition && (
+                                <div
+                                    className="dropdown-menu"
+                                    style={{
+                                        position: 'absolute',
+                                        top: `${dropdownPosition.top}px`,
+                                        right: `${dropdownPosition.left}px`,
+                                        backgroundColor: '#333',
+                                        padding: '10px',
+                                        borderRadius: '5px',
+                                        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                                    }}
+                                >
+                                    <ul>
+                                        {/* Add to Favorites */}
+                                        <li onClick={() => handleSaveOrRemoveTrack()}>
+                                            {isTrackSaved ? 'Видалити з улюблених' : 'Додати до улюблених'}
+                                        </li>
+                                        {/* Add to Playlist */}
+                                        <li onClick={() => setShowPlaylists(!showPlaylists)}>
+                                            Додати до плейлиста
+                                            {showPlaylists && (
+                                                <ul className="playlist-options">
+                                                    {playlists.map((playlist) => (
+                                                        <li key={playlist.id} onClick={() => handleAddToPlaylist(playlist.id, rec.uri)}>
+                                                            {playlist.name}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </li>
+                                        {/* Go to Album */}
+                                        <li onClick={() => window.location.href = `/album/${rec.album.id}`}>Перейти до альбому</li>
+                                    </ul>
+                                </div>
+                            )}
+                        </li>
+                    ))}
+                </ul>
             </div>
-            <div className="track-album">{track.album.name}</div>
-            <div className="track-duration">{formatDuration(track.duration_ms)}</div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+        
+    );
 };
 
 export default TopTracks;

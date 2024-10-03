@@ -13,7 +13,14 @@
     margin-left: 0px;
     text-align: left;
   }
-  
+  .categories-title.light{
+    font-size: 35px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+color: #0B9F0D;
+
+  }
   .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

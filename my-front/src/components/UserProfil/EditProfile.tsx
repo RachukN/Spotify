@@ -4,6 +4,7 @@ import './EditProfile.css'; // Ensure you have a CSS file for styling this form
 import Sidebar from '../Sidebar/Sidebar';
 import Footer from '../Footer/Footer';
 import TopNavigation from '../Navigation/TopNavigation';
+import { useTheme } from '../../services/ThemeContext';
 
 const EditProfile = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,8 @@ const EditProfile = () => {
   const [country, setCountry] = useState('Україна');
   const [region, setRegion] = useState('');
   const [userId, setUserId] = useState('');
-
+  const { isDarkMode } = useTheme();
+ 
   // Fetch the user profile on component mount
   useEffect(() => {
     const storedUserId = localStorage.getItem('spotifyUserId');
@@ -74,14 +76,15 @@ const EditProfile = () => {
   
 
   return (
-    <div className='content'>
+    <div  className={`content ${isDarkMode ? 'dark' : 'light'}`}>
       <Sidebar />
 
-      <div className="edit-profile">
+      <div className={`edit-profile ${isDarkMode ? 'dark' : 'light'}`}>
+
         <TopNavigation />
         <h2>Редагувати профіль</h2>
-        <form className="edit-profile-form">
-          <label htmlFor="email">Електронна пошта</label>
+        <form className={`edit-profile-form ${isDarkMode ? 'dark' : 'light'}`}>
+          <label className={`ch ${isDarkMode ? 'dark' : 'light'}`}  htmlFor="email">Електронна пошта</label>
           <input
             type="email"
             id="email"
@@ -92,21 +95,21 @@ const EditProfile = () => {
 
           <label>Стать та дата народження</label>
           <div className="row">
-            <select className='chol' value={gender} onChange={(e) => setGender(e.target.value)}>
+            <select className={`chol ${isDarkMode ? 'dark' : 'light'}`} value={gender} onChange={(e) => setGender(e.target.value)}>
               <option value="Жінка">Жінка</option>
               <option value="Чоловік">Чоловік</option>
               <option value="Небінарний">Небінарний</option>
               <option value="Краще не говорити">Краще не говорити</option>
               <option value="Інше">Інше</option>
             </select>
-            <select className='chol' value={day} onChange={(e) => setDay(parseInt(e.target.value))}>
+            <select className={`chol ${isDarkMode ? 'dark' : 'light'}`} value={day} onChange={(e) => setDay(parseInt(e.target.value))}>
               {[...Array(31).keys()].map((d) => (
                 <option key={d + 1} value={d + 1}>
                   {d + 1}
                 </option>
               ))}
             </select>
-            <select className='chol' value={month} onChange={(e) => setMonth(e.target.value)}>
+            <select className={`chol ${isDarkMode ? 'dark' : 'light'}`} value={month} onChange={(e) => setMonth(e.target.value)}>
               <option value="Січень">Січень</option>
               <option value="Лютий">Лютий</option>
               <option value="Березень">Березень</option>
@@ -120,7 +123,7 @@ const EditProfile = () => {
               <option value="Листопад">Листопад</option>
               <option value="Грудень">Грудень</option>
             </select>
-            <select className='chol' value={year} onChange={(e) => setYear(parseInt(e.target.value))}>
+            <select className={`chol ${isDarkMode ? 'dark' : 'light'}`} value={year} onChange={(e) => setYear(parseInt(e.target.value))}>
               {Array.from({ length: 100 }, (_, i) => 2024 - i).map((y) => (
                 <option key={y} value={y}>
                   {y}
@@ -130,7 +133,7 @@ const EditProfile = () => {
           </div>
 
           <label htmlFor="country">Країна</label>
-          <select id="country" value={country} onChange={(e) => handleCountryChange(e.target.value)}>
+          <select className={`ch ${isDarkMode ? 'dark' : 'light'}`} id="country" value={country} onChange={(e) => handleCountryChange(e.target.value)}>
             <option value="Україна">Україна</option>
             <option value="США">США</option>
             <option value="Канада">Канада</option>
@@ -149,13 +152,13 @@ const EditProfile = () => {
           />
 
           <div className="buttons">
-            <button type="button" className="cancel-button">Скасувати</button>
+            <button type="button"  className={`cancel-button ${isDarkMode ? 'dark' : 'light'}`}>Скасувати</button>
             <button type="button" className="save-button" onClick={handleSave}>
               Зберегти профіль
             </button>
           </div>
         </form>
-        <div className='footer'><Footer /></div>
+        <div className={`footer ${isDarkMode ? 'dark' : 'light'}`}><Footer /></div>
       </div>
     </div>
   );
