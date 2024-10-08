@@ -1,0 +1,53 @@
+import { useTheme } from '../../services/ThemeContext';
+
+
+ const { isDarkMode } = useTheme();
+ 
+
+ <div className={` ${isDarkMode ? 'dark' : 'light'}`}>
+    className={` ${isDarkMode ? 'dark' : 'light'}`}
+
+
+ background-color: #D1D1D6;
+
+font-size: 20px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+ color: #0B9F0D;
+
+color: var(--Light-black, #1A2125);
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+
+
+color: #0B9F0D;
+
+text-align: center;
+/* txt32 (semi bold) */
+font-family: Inter;
+font-size: 32px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
+
+
+const { language } = useLanguage();
+   
+{language.}

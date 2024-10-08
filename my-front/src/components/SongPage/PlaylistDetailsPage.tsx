@@ -10,6 +10,7 @@ import SearchBar from '../Search/SearchBar';
 import Plus from '../../images/plus-square_svgrepo.com.png';
 import Play from '../../images/Circle play.png';
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 interface Track {
     id: string;
@@ -41,7 +42,8 @@ const PlaylistDetailsPage: React.FC = () => {
     const [selectedTracks, setSelectedTracks] = useState<string[]>([]); // Зберігаємо вибрані для видалення треки
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
+    const { language } = useLanguage();
+  
     // Отримуємо інформацію про плейлист і треки
     useEffect(() => {
         const fetchPlaylist = async () => {
@@ -406,9 +408,9 @@ const PlaylistDetailsPage: React.FC = () => {
                             />
                             <div className='name'>
                                 <div className={`profile-details-f ${isDarkMode ? 'dark' : 'light'}`}>
-                                    <h3 className='title-f'>Плейліст</h3>
+                                    <h3 className='title-f'>{language.playlist}</h3>
                                     <h1 className="minmar">{playlist.name}</h1>
-                                    <h3 className="minmar">Кількість: {tracks.length} треків</h3>
+                                    <h3 className="minmar">{language.quantity}: {tracks.length} {language.tracks}</h3>
                                 </div>
                             </div>
                         </>
@@ -421,9 +423,9 @@ const PlaylistDetailsPage: React.FC = () => {
                         className="seting-img"
                         onClick={handlePlayAllTracks}
                     />
-                    <button className='addp' onClick={toggleDropdown}>Add Tracks</button>
+                    <button className='addp' onClick={toggleDropdown}>{language.addTracks}</button>
                     {selectedTracks.length > 0 && (
-                        <button className='addpp' onClick={handleRemoveTracks}>Remove Selected Tracks</button>
+                        <button className='addpp' onClick={handleRemoveTracks}>{language.removeSelectedTracks}</button>
                     )}
                 </div>
 
@@ -437,7 +439,7 @@ const PlaylistDetailsPage: React.FC = () => {
 
                                 <div  className={`modal-p ${isDarkMode ? 'dark' : 'light'}`}>
                                     <ul className="tracks-list-f">
-                                        <h2>Recommended Tracks</h2>
+                                        <h2>{language.recommendedTracks}</h2>
                                         <button onClick={toggleDropdown} className="close-dropdown-btn">
                                             ✕
                                         </button>
@@ -525,7 +527,7 @@ const PlaylistDetailsPage: React.FC = () => {
                     )}
                 </div>
                 <div className="seting" onClick={toggleDropdownT} >
-                    <h4 className='scr'>  Запропоновані популярні треки </h4>
+                    <h4 className='scr'>  {language.popularRecommendedTracks} </h4>
 
                 </div>
                 {showDropdownT && (

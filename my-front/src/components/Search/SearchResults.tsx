@@ -10,6 +10,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import SearchBar from './SearchBar';
 import TopNavigation from '../Navigation/TopNavigation';
 import BestBaner from '../../images/Frame 148 (2).png';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 interface TrackResult {
   id: string;
@@ -47,7 +48,8 @@ const SearchResults: React.FC = () => {
   const [bestMatch, setBestMatch] = useState<TrackResult | AlbumResult | ArtistResult | null>(null);
   const [topTracks, setTopTracks] = useState<TrackResult[]>([]);
   const [query, setQuery] = useState(''); // Додаємо стейт для запиту
-
+  const { language } = useLanguage();
+ 
   const [error, setError] = useState('');
   const location = useLocation();
 
@@ -143,7 +145,7 @@ const SearchResults: React.FC = () => {
       // Це трек
       return (
         <div className="best-match">
-          <h3>Best Match</h3>
+          <h3>{language.bestMatch}</h3>
           <img src={bestMatch.album?.images[0]?.url} alt={bestMatch.name} />
           <p>{bestMatch.name}</p>
           <p>by {bestMatch.artists.map((artist) => artist.name).join(', ')}</p>
@@ -153,7 +155,7 @@ const SearchResults: React.FC = () => {
       // Це альбом
       return (
         <div className="best-match">
-          <h3 className='best-name'>Найкращий результат</h3>
+          <h3 className='best-name'>{language.bestMatch}</h3>
           <img src={bestMatch.images[0]?.url} alt={bestMatch.name} />
           <p>{bestMatch.name}</p>
           <p>by {bestMatch.artists.map((artist) => artist.name).join(', ')}</p>
@@ -164,12 +166,12 @@ const SearchResults: React.FC = () => {
       return (
         <div className="best-match">
 
-          <h3 className='best-name'>Найкращий результат</h3>
+          <h3 className='best-name'>{language.bestMatch}</h3>
           <img className='best-img' src={bestMatch.images[0].url} alt={bestMatch.name} style={{ borderRadius: '50%' }} />
           <div className='best-details'>
-          <p className='best-item'>Виконавець</p>
+          <p className='best-item'>{language.performer}</p>
           <p className='best-auth' >{bestMatch.name}</p>
-          <p className="best-title">{bestMatch.followers.total} Слухачів</p>
+          <p className="best-title">{bestMatch.followers.total} {language.listeners}</p>
             
           </div>
         </div>
@@ -191,7 +193,7 @@ const SearchResults: React.FC = () => {
         </div>
       <div className="results-section">
         <div className='pisen'>
-      <h2 className="best-name-pisen">Пісні</h2>
+      <h2 className="best-name-pisen">{language.songs}</h2>
         <ul className="tracks-list-search">
           {topTracks.map((track, index) => (
             <li key={`${track.id}-${index}`} className="track-item">
@@ -221,21 +223,21 @@ const SearchResults: React.FC = () => {
         <SpotifyContentListArtist
           artists={artists}
 
-          title="Артисти"
+          title={language.artists}
         />
 
         {/* Albums Section */}
         <SpotifyContentListAlbum
           items={albums}
           handlePlay={handlePlayAlbum}
-          title="Альбоми"
+          title={language.albums}
         />
 
         {/* Tracks Section */}
         <SpotifyContentListTrack
           items={tracks}
           handlePlay={handlePlay}
-          title="Треки"
+          title={language.tracks}
         />
       </div>
       <div className='search'><SearchBar query={query} /></div>

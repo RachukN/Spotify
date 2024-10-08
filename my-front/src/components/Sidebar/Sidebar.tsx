@@ -10,6 +10,9 @@ import Logo from './SymphoNix logo.png';
 import LikedTracksIcon from './Rectangle 2.png';
 import Plus from './Default.png';
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
+
+
 
 interface Album {
   id: string;
@@ -36,6 +39,7 @@ const Sidebar: React.FC = () => {
   const [favoriteArtists, setFavoriteArtists] = useState<Artist[]>([]);
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const { isDarkMode } = useTheme();
+  const { language } = useLanguage();
  
   // Стан для відстеження активних кнопок
   const [activeFilters, setActiveFilters] = useState({
@@ -158,20 +162,20 @@ const Sidebar: React.FC = () => {
           <li>
             <Link to="/home" className="sidebar-link">
               <img src={HomeIcon} alt="Home" className="sidebar-icon-h" />
-              Головна
+              {language.home}
             </Link>
           </li>
           <li>
             <Link to="/searchh" className="sidebar-link">
               <img src={SearchIcon} alt="Search" className="sidebar-icon" />
-              Пошук
+              {language.search}
             </Link>
           </li>
           <li>
             <div className="sidebar-link">
               <Link to="/playlists" className="sidebar-link">
                 <img src={LibraryIcon} alt="Library" className="sidebar-icon" />
-                Бібліотека
+                {language.library}
                 <img src={Plus} alt="Library" className="plus" />
               </Link>
             </div>
@@ -183,19 +187,19 @@ const Sidebar: React.FC = () => {
           className={`sidebar-button ${activeFilters.playlists ? 'active' : ''}`}
           onClick={() => toggleFilter('playlists')}
         >
-          Плейлісти
+          {language.playlists}
         </button>
         <button
           className={`sidebar-button ${activeFilters.artists ? 'active' : ''}`}
           onClick={() => toggleFilter('artists')}
         >
-          Артисти
+          {language.artists}
         </button>
         <button
           className={`sidebar-button ${activeFilters.albums ? 'active' : ''}`}
           onClick={() => toggleFilter('albums')}
         >
-          Альбоми
+          {language.albums}
         </button>
       </div>
 
@@ -205,8 +209,10 @@ const Sidebar: React.FC = () => {
             <img src={LikedTracksIcon} alt="Liked Tracks" className="sidebar-item-img" />
           </Link>
           <div>
-            <p className="sidebar-item-title-s">Треки, які сподобалися</p>
-            <p className="sidebar-item-subtitle-s">Плейліст • {favoriteTracksCount} пісень</p>
+            <p className="sidebar-item-title-s">{language.likedTracks}</p>
+            <p className="sidebar-item-subtitle-s">
+              {language.playlist} • {favoriteTracksCount} {language.songs}
+            </p>
           </div>
         </div>
       </div>

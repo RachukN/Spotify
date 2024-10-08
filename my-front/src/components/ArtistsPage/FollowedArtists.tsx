@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SpotifyContentListArtist from '../Templates/SpotifyContentListArtist'; // Import the reusable component
 import LoadingArtists from '../Loading/LoadingArtists'; // Import the loading component
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 // Define the Artist interface used across both components
 interface Artist {
@@ -17,7 +18,8 @@ const FollowedArtists: React.FC = () => {
   const [artists, setArtists] = useState<Artist[]>([]); // Explicitly define the type as Artist[]
   const [loading, setLoading] = useState(true); // State for loading status
   const [error, setError] = useState(''); // State to capture any errors
-
+  const { language } = useLanguage();
+  
   useEffect(() => {
     const fetchFollowedArtists = async () => {
       const token = localStorage.getItem('spotifyAccessToken'); // Get the Spotify access token from localStorage
@@ -68,7 +70,7 @@ const FollowedArtists: React.FC = () => {
 
   return (
     <div>
-      <SpotifyContentListArtist artists={artists} title="Підписані артисти" />
+      <SpotifyContentListArtist artists={artists} title={language.subscribedArtists} />
     </div>
   );
 };

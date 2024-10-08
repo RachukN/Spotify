@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LeftGray from '../Main/Images/Frame 73.png';
-import RightGray from '../Main/Images/Frame 72 (1).png';
-import LeftGreen from '../Main/Images/Frame 73 (1).png';
+import RightGray from '../Main/Images/Frame 72 (2).png';
+import LeftGreen from '../Main/Images/Frame 73 (2).png';
 import RightGreen from '../Main/Images/Frame 72.png';
 import Play from '../../images/Frame 76.png';
 import '../../styles/Music.css';

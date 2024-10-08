@@ -3,12 +3,13 @@ import axios from 'axios';
 import SpotifyContentListTrack from './SpotifyContentListTrack'; // Use the track list component
 import { handlePlayTrackList } from '../../utils/SpotifyPlayer'; // Import the new function
 import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 const RockMusic: React.FC = () => {
   const [tracks, setTracks] = useState([]); // Store tracks
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
+const { language } = useLanguage();
   useEffect(() => {
     const fetchRockTracks = async () => {
       const token = localStorage.getItem('spotifyAccessToken');
@@ -51,7 +52,7 @@ const RockMusic: React.FC = () => {
   }
 
   return (
-    <SpotifyContentListTrack items={tracks} handlePlay={handlePlay} title="Рок треки" />
+    <SpotifyContentListTrack items={tracks} handlePlay={handlePlay} title={language.rockTracks} />
   );
 };
 

@@ -19,7 +19,7 @@ const Shows: React.FC = () => {
   const [error, setError] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const { isDarkMode } = useTheme();
- 
+
   useEffect(() => {
     const fetchShows = async () => {
       const token = localStorage.getItem('spotifyAccessToken');
@@ -70,7 +70,7 @@ const Shows: React.FC = () => {
 
 
   if (loading) {
-    return <div><LoadingTrackAlbum/></div>;
+    return <div><LoadingTrackAlbum /></div>;
   }
 
   if (error) {
@@ -85,12 +85,12 @@ const Shows: React.FC = () => {
     <div className='music-c'>
       <div style={{ padding: '20px', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: '100%' }}>
-       
+
           <div
             ref={scrollRef}
             className='music-c'
             style={{
-              marginTop:'-20px',
+              marginTop: '-20px',
               width: '1100px',
               overflowX: 'hidden',
               display: 'flex',
@@ -121,10 +121,10 @@ const Shows: React.FC = () => {
                         style={{ width: '140px', height: '140px', borderRadius: '8px' }}
                       />
                     )}
-                    <p  className={`auth ${isDarkMode ? 'dark' : 'light'}`}
- style={{ margin: '10px 0' }}>{show.name}</p>
-                    <p  className={` result-name ${isDarkMode ? 'dark' : 'light'}`}
- >{show.publisher}</p> {/* Show's publisher */}
+                    <p className={`auth ${isDarkMode ? 'dark' : 'light'}`}
+                      style={{ margin: '10px 0' }}>{show.name}</p>
+                    <p className={` result-name ${isDarkMode ? 'dark' : 'light'}`}
+                    >{show.publisher}</p> {/* Show's publisher */}
                   </a>
                 </div>
               );

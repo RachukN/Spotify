@@ -9,18 +9,19 @@ import Album4 from '../../images/Rectangle 2 (3).png';
 import Album5 from '../../images/Rectangle 2 (4).png';
 import Album6 from '../../images/Rectangle 2 (5).png';
 import Album7 from '../../images/Rectangle 2 (6).png';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 const SymphoNixAlbums: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const { language } = useLanguage();
   const albums = [
-    { src: Album1, title: 'Вірусні' },
-    { src: Album2, title: 'Реп топ' },
-    { src: Album3, title: 'Хіп-хоп топ' },
-    { src: Album4, title: 'Топ 50 Україна' },
-    { src: Album5, title: 'Топ 100 Весь світ' },
-    { src: Album6, title: 'Топ 50 Весь світ' },
-    { src: Album7, title: 'Топ пісень Весь світ' },
+    { src: Album1, title: language.viral },
+    { src: Album2, title: language.rapTop },
+    { src: Album3, title: language.hipHopTop },
+    { src: Album4, title: language.top50Ukraine },
+    { src: Album5, title: language.top100World },
+    { src: Album6, title: language.top50World },
+    { src: Album7, title: language.topSongsWorld },
   ];
 
   return (

@@ -1,0 +1,157 @@
+.admin-panel-container {
+    padding: 20px;
+    background-color: #13191C;
+    color: #FFFFFF;
+  }
+  
+  .admin-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-panel-search {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .admin-panel-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .admin-panel-item {
+    background: #1F1F1F;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .admin-panel-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+  }
+  
+  .admin-panel-item-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .admin-panel-item-title {
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .admin-panel-item-subtitle {
+    color: #AAAAAA;
+    font-size: 14px;
+  }
+  
+  .admin-panel-actions button {
+    background-color: #4BDD4C;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: #13191C;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .admin-panel-actions button:hover {
+    background-color: #34A853;
+  }
+  
+  .playlist-list, .artist-list, .album-list, .track-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .playlist-item, .artist-item, .album-item, .track-item {
+    background: #1F1F1F;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .playlist-item img, .artist-item img, .album-item img, .track-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+  }
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-button {
+    background-color: #4BDD4C;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    color: #13191C;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .pagination-button:disabled {
+    background-color: #AAAAAA;
+    cursor: not-allowed;
+  }
+  
+  .pagination-info {
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+  
+  .track-input {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .track-input input {
+    width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .track-input button {
+    padding: 8px 12px;
+    background-color: #4BDD4C;
+    border: none;
+    border-radius: 5px;
+    color: #13191C;
+    cursor: pointer;
+  }
+  
+  .track-input button:hover {
+    background-color: #34A853;
+  }
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  

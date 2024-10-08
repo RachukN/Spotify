@@ -15,6 +15,9 @@ import ArtistTopTracks from '../Templates/ArtistTopTracks';
 import ArtistSinglesList from '../Templates/ArtistSinglesList';
 import SpotifyContentListArtist from '../Templates/SpotifyContentListArtist';
 import { handlePlayTrack, handlePlayAlbum } from '../../utils/SpotifyPlayer';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
+
+
 interface Artist {
   id: string;
   name: string;
@@ -61,6 +64,7 @@ const ArtistPage: React.FC = () => {
   const [error, setError] = useState('');
   const [isFollowing, setIsFollowing] = useState<boolean | null>(null);
   const { isDarkMode } = useTheme();
+  const { language } = useLanguage();
 
 
 
@@ -200,10 +204,10 @@ const ArtistPage: React.FC = () => {
           />
           <div className={`name-a ${isDarkMode ? 'dark' : 'light'}`}
           >
-            <div className="title-a">Виконавець</div>
+            <div className="title-a">{language.performer}</div>
             <div className={`profile-details-a ${isDarkMode ? 'dark' : 'light'}`}>
               <h1>{artist.name}</h1>
-              <p className="title-a">{artist.followers.total} Слухачів</p>
+              <p className="title-a">{artist.followers.total} {language.listeners}</p>
             </div>
           </div>
         </div>
@@ -216,10 +220,10 @@ const ArtistPage: React.FC = () => {
             onClick={handleSubscribe}
             className={isFollowing ? ' subscribed' : 'subscribe-button'}
           >
-            {isFollowing ? 'Підписаний' : 'Підписатися'}
+            {isFollowing ? language.subscribed : language.subscribe }
           </button>
         </div>
-        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Tоп треки виконавця</h2>
+        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>{language.topTracks}</h2>
         <ArtistTopTracks
           tracks={topTracks}
           handlePlayTrack={handlePlayTrack}
@@ -228,7 +232,7 @@ const ArtistPage: React.FC = () => {
 
 
         {/* Singles Section with Scroll */}
-        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Сингли</h2>
+        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>{language.singles}</h2>
         <div className='artist-m'>
           <ArtistSinglesList
             singles={singles}
@@ -242,7 +246,7 @@ const ArtistPage: React.FC = () => {
         <div className="results-section-a">
           <SpotifyContentListArtist
             artists={relatedArtists}
-            title="Схожі артисти"
+            title={language.similarArtists}
           />
 
         </div>

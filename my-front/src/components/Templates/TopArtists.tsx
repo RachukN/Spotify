@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SpotifyContentListArtist from './SpotifyContentListArtist'; // The component you created
 import LoadingArtists from '../Loading/LoadingArtists';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 const TopArtists: React.FC = () => {
   const [artists, setArtists] = useState([]); // State to hold artist data
   const [loading, setLoading] = useState(true); // State for loading status
   const [error, setError] = useState(''); // State to capture any errors
-
+  const { language } = useLanguage();
   useEffect(() => {
     const fetchTopArtists = async () => {
       const token = localStorage.getItem('spotifyAccessToken'); // Get the Spotify access token from localStorage
@@ -53,7 +54,7 @@ const TopArtists: React.FC = () => {
 
   return (
     <div>
-      <SpotifyContentListArtist artists={artists} title="Популярні артисти" />
+      <SpotifyContentListArtist artists={artists} title={language.popularArtists} />
     </div>
   );
 };

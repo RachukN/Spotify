@@ -9,13 +9,14 @@ import Play from '../../images/Frame 76.png';
 import Seting from '../Home/Images/Frame 129.png';
 import bannerImage from '../Home/Images/Frame 148 (2).png';
 import LeftGray from '../Main/Images/Frame 73.png';
-import RightGray from '../Main/Images/Frame 72 (1).png';
-import LeftGreen from '../Main/Images/Frame 73 (1).png';
+import RightGray from '../Main/Images/Frame 72 (2).png';
+import LeftGreen from '../Main/Images/Frame 73 (2).png';
 import RightGreen from '../Main/Images/Frame 72.png';
 import Setting1 from '../../images/Frame 160 (1).png';
 import '../../styles/SongPage.css';
 import LoadingPageWithSidebarT from '../Loading/LoadingTrackPage';
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 interface Device {
     id: string;
@@ -89,7 +90,7 @@ const TrackPage: React.FC = () => {
     const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number } | null>(null);
     const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     const { isDarkMode } = useTheme();
-
+    const { language } = useLanguage();
 
     useEffect(() => {
         const fetchTrackData = async () => {
@@ -460,7 +461,7 @@ const TrackPage: React.FC = () => {
                 <div className="inf-s">
                     <img src={trackImageUrl} alt={track.name} className="profile-image-s" />
                     <div className="name-s">
-                        <div className="title-s">Трек</div>
+                        <div className="title-s">{language.tracks}</div>
                         <h1>{track.name}</h1>
                         <div className={`profile-details-s ${isDarkMode ? 'dark' : 'light'}`}
                         >
@@ -483,7 +484,7 @@ const TrackPage: React.FC = () => {
                         onClick={handleSaveOrRemoveTrack}
                         className={isTrackSaved ? 'subscribed-s' : 'subscribe-button-s'}
                     >
-                        {isTrackSaved ? 'Видалити з улюблених' : 'Додати до улюблених'}
+                         {isTrackSaved ? language.removeFromFavorites : language.addToFavorites}
                     </button>
 
                     {/* Play/Pause Button */}
@@ -494,7 +495,7 @@ const TrackPage: React.FC = () => {
                 <div className="cont-a">
                     <div className="top-tracks">
 
-                        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Рекомендації на основі треку</h2>
+                        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>{language.recommendationsBasedOnTrack}</h2>
 
                         <ul className="tracks-list">
                             {recommendations.slice(0, 5).map((rec, index) => (
@@ -554,12 +555,12 @@ const TrackPage: React.FC = () => {
                                             <ul>
                                                 {/* Add to Favorites (already implemented) */}
                                                 <li onClick={() => handleSaveOrRemoveTrack()}>
-                                                    {isTrackSaved ? 'Видалити з улюблених' : 'Додати до улюблених'}
+                                                {isTrackSaved ? language.removeFromFavorites : language.addToFavorites}
                                                 </li>
 
                                                 {/* Add to Playlist (show playlists on click) */}
                                                 <li onClick={togglePlaylists}>
-                                                    Додати до плейлиста
+                                                {language.addToPlaylist}
                                                     {showPlaylists && (
                                                         <ul className="playlist-options">
                                                             {playlists.map((playlist) => (
@@ -572,7 +573,7 @@ const TrackPage: React.FC = () => {
                                                 </li>
 
                                                 {/* Go to Album */}
-                                                <li onClick={handleGoToAlbum}>Перейти до альбому</li>
+                                                <li onClick={handleGoToAlbum}>{language.goToAlbum}</li>
                                             </ul>
                                         </div>
                                     )}
@@ -586,7 +587,7 @@ const TrackPage: React.FC = () => {
                 {/* Top Tracks Section */}
                 <div className="cont-a">
                     <div className="top-tracks">
-                        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Популярні треки {track.artists.map((artist) => artist.name).join(', ')}</h2>
+                        <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>{language.popularTracks} {track.artists.map((artist) => artist.name).join(', ')}</h2>
 
                         <ul className="tracks-list">
                             {topTracks.map((track, index) => (
@@ -634,12 +635,12 @@ const TrackPage: React.FC = () => {
                                             <ul>
                                                 {/* Add to Favorites (already implemented) */}
                                                 <li onClick={() => handleSaveOrRemoveTrack()}>
-                                                    {isTrackSaved ? 'Видалити з улюблених' : 'Додати до улюблених'}
+                                                    {isTrackSaved ? language.removeFromFavorites : language.addToFavorites}
                                                 </li>
 
                                                 {/* Add to Playlist (show playlists on click) */}
                                                 <li onClick={togglePlaylists}>
-                                                    Додати до плейлиста
+                                                addToPlaylist
                                                     {showPlaylists && (
                                                         <ul className="playlist-options">
                                                             {playlists.map((playlist) => (
@@ -652,7 +653,7 @@ const TrackPage: React.FC = () => {
                                                 </li>
 
                                                 {/* Go to Album */}
-                                                <li onClick={handleGoToAlbum}>Перейти до альбому</li>
+                                                <li onClick={handleGoToAlbum}>{language.goToAlbum}</li>
                                             </ul>
                                         </div>
                                     )}
@@ -662,7 +663,7 @@ const TrackPage: React.FC = () => {
                     </div>
                 </div>
                 {/* Singles Section with Scroll */}
-                <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Сингли</h2>
+                <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>{language.singles}</h2>
                 <div className="cont-sa">
                     <div style={{ position: "relative", width: "100%" }}>
                         <img
@@ -706,7 +707,7 @@ const TrackPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>Схожі артисти</h2>
+                <h2 className={`popularity ${isDarkMode ? 'dark' : 'light'}`}>{language.similarArtists}</h2>
                 
                 <div className="cont-sa">
                     <div style={{ position: "relative", width: "100%" }}>

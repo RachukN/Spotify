@@ -4,6 +4,7 @@ import './TopNavigation.css';
 import Bell from '../Main/Images/Bell.png';
 import User from '../Main/Images/user-128.png'; // Your user image
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 // Add the isDarkMode prop and the function to toggle the theme
 
@@ -12,7 +13,8 @@ const TopNavigation: React.FC = () => {
   const navigate = useNavigate();
   const [dropdownActive, setDropdownActive] = useState(false);
   const { isDarkMode } = useTheme();
- 
+  const { language } = useLanguage();
+   
 
   const handleAccountClick = () => {
     navigate('/profileseting'); // Redirect to the account page
@@ -49,10 +51,10 @@ const TopNavigation: React.FC = () => {
             style={{ cursor: 'pointer' }}
           />
           <div className={`user-dropdown ${dropdownActive ? 'active' : ''}`}>
-            <a onClick={handleAccountClick}>Акаунт</a>
-            <a onClick={handleProfileClick}>Профіль</a>
-            <hr />
-            <a onClick={handleLogoutClick}>Вийти</a>
+          <a onClick={handleAccountClick}>{language.account}</a>
+      <a onClick={handleProfileClick}>{language.profile}</a>
+      <hr />
+      <a onClick={handleLogoutClick}>{language.logout}</a>
           </div>
         </div>
       </div>

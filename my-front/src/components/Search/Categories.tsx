@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Categories.css'; // Підключаємо стилі
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<any[]>([]); // Використовуємо стан для зображень
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const { language } = useLanguage();
  
   // Завантажуємо зображення з API
   useEffect(() => {
@@ -42,7 +44,7 @@ const Categories: React.FC = () => {
   return (
     <div className="categories-container">
       <h2  className={`categories-title ${isDarkMode ? 'dark' : 'light'}`}
-      >Весь каталог</h2>
+      >{language.allCatalog}</h2>
       <div className="categories-grid">
         {categories.map((category) => (
           <div

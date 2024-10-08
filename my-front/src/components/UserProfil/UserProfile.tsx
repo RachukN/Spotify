@@ -16,6 +16,7 @@ import PlayerControls from '../Player/PlayerControls';
 import { GlobalPlayerProvider } from '../Player/GlobalPlayer';
 import LoadingPageWithSidebarA from '../Loading/LoadingTrackPageA';
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 
 
@@ -68,7 +69,7 @@ const UserProfile: React.FC = () => {
 
   // Use the user's profile image or a default image if none is available
   const profileImageUrl = user.images.length > 0 ? user.images[0].url : defaultProfileImage;
-
+  const { language } = useLanguage();
   return (
     <div className="main-container">
       <div className='sidebar'><Sidebar /></div>
@@ -85,7 +86,7 @@ const UserProfile: React.FC = () => {
             className="profile-image"
           />
           <div className='name'>
-            <div className='title'>Профіль</div>
+            <div className='title'>{language.profile}</div>
             <div className="profile-details">
               <h1>{user.display_name}</h1>
             </div>
@@ -100,8 +101,8 @@ const UserProfile: React.FC = () => {
           <div className="h2"><TopArtists /></div>
         </div>
         <div className='contik'>
-          <h2  className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>Топ треки цього місяця</h2>
-          <h3  className={`section-titleh ${isDarkMode ? 'dark' : 'light'}`}>Бачите лише ви</h3>
+          <h2  className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>{language.topTracksThisMonth}</h2>
+          <h3  className={`section-titleh ${isDarkMode ? 'dark' : 'light'}`}>{language.onlyVisibleToYou}</h3>
 
           <div className="h2"><TopTracks /></div>
 

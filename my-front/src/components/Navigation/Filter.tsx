@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './Filter.css';
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
+
+
+
 interface FilterProps {
   onFilterChange: (filter: string) => void;
 }
@@ -8,6 +12,11 @@ interface FilterProps {
 const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all'); // Track active button
   const { isDarkMode } = useTheme();
+  const { language } = useLanguage();
+   
+
+
+
   // Handle button click
   const handleFilterClick = (filter: string) => {
     setActiveFilter(filter); // Set the clicked button as active
@@ -24,13 +33,13 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
           className={`nav-button  ${activeFilter === 'all' ? 'active' : ''}`} // Apply 'active' class if 'all' is selected
           onClick={() => handleFilterClick('all')}
         >
-          Усе
+          {language.all}
         </button>
         <button
           className={`nav-button ${activeFilter === 'music' ? 'active' : ''}`} // Apply 'active' class if 'music' is selected
           onClick={() => handleFilterClick('music')}
         >
-          Музика
+          {language.music}
         </button>
       </div>
     </div>

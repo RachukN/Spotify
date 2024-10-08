@@ -3,6 +3,7 @@ import axios from 'axios';
 import SpotifyContentListAlbum from './SpotifyContentListAlbum';
 import { handlePlayAlbum } from '../../utils/SpotifyPlayer';
 import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 // Define the Album interface based on Spotify's API structure
 interface Album {
@@ -18,7 +19,7 @@ const PopularAlbums: React.FC = () => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
+  const { language } = useLanguage();
   useEffect(() => {
     const fetchPopularAlbums = async () => {
       const token = localStorage.getItem('spotifyAccessToken');
@@ -79,7 +80,7 @@ const PopularAlbums: React.FC = () => {
     <SpotifyContentListAlbum
       items={albums}
       handlePlay={handlePlayAlbum}
-      title="Популярні альбоми"
+      title={language.popularAlbums}
     />
   );
 };

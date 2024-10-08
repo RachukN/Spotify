@@ -32,6 +32,7 @@ interface GlobalPlayerProviderProps {
 export const GlobalPlayerProvider: React.FC<GlobalPlayerProviderProps> = ({ children }) => {
   const [player, setPlayer] = useState<Spotify.Player | null>(null);
   const [deviceId, setDeviceId] = useState<string | null>(null);
+const [playerState, setPlayerState] = useState<Spotify.PlaybackState | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('spotifyAccessToken');
@@ -39,29 +40,34 @@ export const GlobalPlayerProvider: React.FC<GlobalPlayerProviderProps> = ({ chil
       console.error('No Spotify access token found');
       return;
     }
-
+  
     const loadSpotifySDK = () => {
       if (!window.onSpotifyWebPlaybackSDKReady) {
-        // Define the global function expected by the SDK
         window.onSpotifyWebPlaybackSDKReady = () => {
           const spotifyPlayer = new window.Spotify.Player({
             name: 'My Spotify Player',
             getOAuthToken: cb => { cb(token); },
             volume: 0.5,
           });
-
+  
           setPlayer(spotifyPlayer);
-
+  
           spotifyPlayer.addListener('ready', ({ device_id }) => {
             console.log('Player is ready with Device ID:', device_id);
-            setDeviceId(device_id); // Set the device ID
+            setDeviceId(device_id); // Set the device ID for consistent playback
           });
-
+  
           spotifyPlayer.addListener('not_ready', ({ device_id }) => {
             console.log('Device went offline with Device ID:', device_id);
-            setDeviceId(null); // Unset the device ID when it's not ready
+            setDeviceId(null);
           });
-
+  
+          spotifyPlayer.addListener('player_state_changed', (state) => {
+            if (state) {
+              setPlayerState(state); // Store the current state of the player (track, isPlaying, etc.)
+            }
+          });
+  
           spotifyPlayer.connect().then(success => {
             if (success) {
               console.log('Spotify Player connected successfully');
@@ -72,7 +78,7 @@ export const GlobalPlayerProvider: React.FC<GlobalPlayerProviderProps> = ({ chil
         };
       }
     };
-
+  
     const existingScript = document.getElementById('spotify-player');
     if (!existingScript) {
       const script = document.createElement('script');
@@ -80,15 +86,16 @@ export const GlobalPlayerProvider: React.FC<GlobalPlayerProviderProps> = ({ chil
       script.src = 'https://sdk.scdn.co/spotify-player.js';
       script.async = true;
       document.body.appendChild(script);
-      script.onload = loadSpotifySDK; // Only load the player once the SDK script is loaded
+      script.onload = loadSpotifySDK;
     } else {
       loadSpotifySDK();
     }
-
+  
     return () => {
       player?.disconnect();
     };
   }, [player]);
+  
 
   const play = () => {
     if (!player) {

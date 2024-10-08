@@ -15,10 +15,14 @@ import NewTracks from '../Templates/NewTrack';
 import TopArtists from '../Templates/TopArtists';
 import LoadingPageWithSidebar from '../Loading/LoadingPage';
 import { useTheme } from '../../services/ThemeContext';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
+
 const MainPage: React.FC = () => {
   const [filter, setFilter] = useState<string>('all'); // Track the current filter ("all", "music", etc.)
   const [loading, setLoading] = useState(true);
   const { isDarkMode } = useTheme();
+  const { language } = useLanguage();
+ 
   useEffect(() => {
     // Check if the page has been reloaded once already
     const isHomeReloaded = localStorage.getItem('isHomeReloaded');
@@ -67,7 +71,7 @@ const MainPage: React.FC = () => {
         {/* Only show this section when filter is "all" */}
         {filter === 'all' && (
           <div className='cont'>
-            <h2 className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>Шоу, які варто переглянути</h2>
+            <h2 className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>{language.showsToWatch}</h2>
             <Shows />
           </div>
         )}
@@ -81,7 +85,7 @@ const MainPage: React.FC = () => {
         </div>
 
         <div className='cont'>
-           <h2 className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>Toп-чарти</h2>
+           <h2 className={`section-title ${isDarkMode ? 'dark' : 'light'}`}>{language.topCharts}</h2>
             <SymphoNixAlbums />
         </div>
 
