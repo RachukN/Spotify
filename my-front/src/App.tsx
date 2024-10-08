@@ -22,20 +22,24 @@ import SubscriptionPage from './components/UserProfil/SubscriptionPage';
 import EditProfile from './components/UserProfil/EditProfile';
 import PremiumRequired from './components/UserProfil/PremiumRequired';
 import LoadingTrackPage from './components/Loading/LoadingTrackPage';
-import UploadImages from './services/UploadImages';
+import NewAdmin from './components/Admin/NewAdmin';
 import { ThemeProvider } from './services/ThemeContext';
+import { LanguageProvider } from './services/LanguageContext';
+import AdminPanel from './components/Admin/AdminPanel';
 
 const App: React.FC = () => {
   
   return (
+    <LanguageProvider>
     <ThemeProvider>
     <GlobalPlayerProvider>
-      
+    
     <Router>
       <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Login />} />
         <Route path="/callback" element={<Callback />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="/home" element={<MainPage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/categories" element={<Categories />} /> 
@@ -53,16 +57,18 @@ const App: React.FC = () => {
         <Route path="/editprofile" element={<EditProfile/>} />
         <Route path="/premium-required" element={<PremiumRequired/>} />
         <Route path="/loading" element={<LoadingTrackPage/>} />
-        <Route path="/u" element={<UploadImages/>} />
+        <Route path="/admi" element={<NewAdmin/>} />
+        
         
         
         
         </Route>
       </Routes>
     </Router>
-   
+    
     </GlobalPlayerProvider>
     </ThemeProvider>
+    </LanguageProvider>
   );
 };
 

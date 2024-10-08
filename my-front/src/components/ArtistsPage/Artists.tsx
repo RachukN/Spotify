@@ -4,6 +4,7 @@ import axios from 'axios';
 import Left from '../Main/Images/Frame 73.png';
 import Right from '../Main/Images/Frame 72.png';
 import '../../styles/Music.css';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 interface Artist {
   id: string;
@@ -17,6 +18,7 @@ const Artists: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -132,7 +134,7 @@ const Artists: React.FC = () => {
                     />
                   )}
                   <p className='auth' style={{ margin: '10px 0' }}>{artist.name}</p>
-                  <p style={{ fontSize: 'small', color: '#666' }}>Виконавець</p> {/* Subtitle */}
+                  <p style={{ fontSize: 'small', color: '#666' }}>{language.performer}</p> {/* Subtitle */}
                 </a>
               </div>
             ))}

@@ -101,11 +101,11 @@ const FavoritesPage: React.FC = () => {
 
     return (
         <div className="main-container-s">
-            <div className='sidebar'><Sidebar isDarkMode={isDarkMode} /></div>
+            <div className='sidebar'><Sidebar  /></div>
 
             <div className={`content-s ${isDarkMode ? 'dark' : 'light'}`}
             >
-                <TopNavigation isDarkMode={isDarkMode} />
+                <TopNavigation  />
                 <div className="banner-container-user-s">
                     <img src={bannerImage} alt="Banner" className="banner-image-user" />
                 </div>
@@ -161,7 +161,7 @@ const FavoritesPage: React.FC = () => {
                     </ul>
                 </div>
 
-                <Footer isDarkMode={isDarkMode} />
+                <Footer />
             </div>
         </div>
     );

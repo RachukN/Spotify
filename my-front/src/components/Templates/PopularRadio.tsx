@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SpotifyContentListPlaylist from './SpotifyContentListPlaylist'; // Import the reusable component
 import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 const PopularRadio: React.FC = () => {
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
+  const { language } = useLanguage();
   useEffect(() => {
     const fetchPopularRadio = async () => {
       const token = localStorage.getItem('spotifyAccessToken');
@@ -62,7 +63,7 @@ const PopularRadio: React.FC = () => {
     <SpotifyContentListPlaylist
       items={playlists} // Pass playlist data to the reusable component
       handlePlay={handlePlay} // Pass the handlePlay function
-      title="Popular Radio"
+      title={language.popularRadio}
     />
   );
 };

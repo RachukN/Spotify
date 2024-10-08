@@ -154,7 +154,7 @@ const PlaylistsPage: React.FC = () => {
     return (
         <div>
             <div className='search-p'><SearchBar /></div>
-            <div className='search-i'><TopNavigation isDarkMode={isDarkMode} /></div>
+            <div className='search-i'><TopNavigation  /></div>
 
             <div className="search-results-container-p">
                 <div className="bg-img-p"><img src={BGimage} alt="background" /></div>

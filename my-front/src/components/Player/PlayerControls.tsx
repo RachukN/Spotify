@@ -53,15 +53,14 @@ const PlayerControls: React.FC = () => {
       if (player) {
         player.addListener('ready', ({ device_id }) => {
           console.log('Player is ready with Device ID:', device_id);
-          setCurrentDeviceId(device_id); // Update device ID when the player is ready
+          setCurrentDeviceId(device_id); 
           setIsPlayerReady(true);
         });
-
+    
         player.addListener('not_ready', ({ device_id }) => {
           console.log('Player not ready with Device ID:', device_id);
           setIsPlayerReady(false);
         });
-
         player.addListener('player_state_changed', (state) => {
           if (state) {
             const track = state.track_window.current_track;

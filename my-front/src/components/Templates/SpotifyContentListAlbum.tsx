@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LeftGray from '../Main/Images/Frame 73.png';
-import RightGray from '../Main/Images/Frame 72 (1).png';
-import LeftGreen from '../Main/Images/Frame 73 (1).png';
+import RightGray from '../Main/Images/Frame 72 (2).png';
+import LeftGreen from '../Main/Images/Frame 73 (2).png';
 import RightGreen from '../Main/Images/Frame 72.png';
 import Play from '../../images/Frame 76.png';
 import '../../styles/Music.css';
@@ -57,8 +57,8 @@ const SpotifyContentListAlbum: React.FC<SpotifyContentListProps> = ({ items, han
     <div className='music-c'>
       <div style={{ padding: '20px', textAlign: 'center' }}>
         <div style={{ position: 'relative', width: '100%' }}>
-          <img src={leftArrow} alt="Scroll Left" className="img-l" onClick={scrollLeft} />
-          <img src={rightArrow} alt="Scroll Right" className="img-r" onClick={scrollRight} />
+          <img src={leftArrow} alt="Scroll Left" className={`img-l ${isDarkMode ? 'dark' : 'light'}`} onClick={scrollLeft} />
+          <img src={rightArrow} alt="Scroll Right" className={`img-r ${isDarkMode ? 'dark' : 'light'}`} onClick={scrollRight} />
           <div className={`main-title ${isDarkMode ? 'dark' : 'light'}`}
           >{title}</div>
           <div ref={scrollRef} className='music-c' onScroll={updateArrows}>

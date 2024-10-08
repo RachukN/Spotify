@@ -3,12 +3,13 @@ import axios from 'axios';
 import SpotifyContentListAlbum from './SpotifyContentListAlbum';
 import { handlePlayAlbum } from '../../utils/SpotifyPlayer';
 import LoadingTrackAlbum from '../Loading/LoadingTrackAlbum';
+import { useLanguage } from '../../services/LanguageContext'; // Import language hook
 
 const NewReleases: React.FC = () => {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
+  const { language } = useLanguage();
   useEffect(() => {
     const fetchNewReleases = async () => {
       const token = localStorage.getItem('spotifyAccessToken');
@@ -46,7 +47,7 @@ const NewReleases: React.FC = () => {
     <SpotifyContentListAlbum
       items={albums}
       handlePlay={handlePlayAlbum}
-      title="Новинки для вас"
+      title={language.newForYou}
     />
   );
 };

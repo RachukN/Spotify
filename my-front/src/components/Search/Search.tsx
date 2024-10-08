@@ -12,16 +12,16 @@ const Search: React.FC = () => {
     return (
         <div className="main-container">
       
-      <div className='sidebar'><Sidebar isDarkMode={isDarkMode} /></div>
+      <div className='sidebar'><Sidebar  /></div>
       <div  className={` content ${isDarkMode ? 'dark' : 'light'}`}
       >
       <div className='cont' >
       <Categories/>
-      <Footer isDarkMode={isDarkMode}/>
+      <Footer />
       
       </div>
       </div>
-      <div className='filter'><TopNavigation isDarkMode={isDarkMode} /></div>
+      <div className='filter'><TopNavigation/></div>
       <div className='filter-f'><SearchBar /></div>
      
       </div>

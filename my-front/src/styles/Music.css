@@ -66,7 +66,11 @@ line-height: normal;
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Green shadow on hover */
    
 }
+.img-l.light,
+.img-r.light{
+  background: var(--bright-topic, #D1D1D6);
 
+}
 .img-r {
   position: absolute;
   right: 60px;
